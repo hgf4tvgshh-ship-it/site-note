@@ -1,7 +1,7 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#111c1b"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="현장노트"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon.png"><title>SITE NOTE | 현장노트</title><style>
 :root{--ink:#172523;--muted:#788380;--line:#e8eeea;--mint:#cce8da;--accent:#1c6c58;--bg:#f6f8f6;--card:white;--warn:#b56a17}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif}.shell{max-width:880px;margin:auto;padding:22px 16px 92px}.top{display:flex;justify-content:space-between;align-items:center;margin:6px 0 28px}.brand{font-size:12px;letter-spacing:3px;font-weight:800}.top small{color:var(--muted)}h1{font-size:30px;margin:0 0 9px;letter-spacing:-1px}h2{font-size:20px;letter-spacing:-.6px;margin:0}p{line-height:1.55}button,input,textarea,select{font:inherit}button{cursor:pointer;border:0}.btn{background:var(--ink);color:white;border-radius:13px;padding:12px 15px;font-weight:700}.btn-light{background:#ebf2ee;color:var(--ink);border-radius:13px;padding:12px 15px;font-weight:700}.btn-outline{background:white;border:1px solid var(--line);color:var(--ink);border-radius:13px;padding:11px 14px;font-weight:700}.small{font-size:12px}.muted{color:var(--muted)}.hero{display:flex;align-items:end;justify-content:space-between;gap:10px;margin-bottom:24px}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.metric{background:white;border:1px solid var(--line);padding:18px;border-radius:18px}.metric strong{display:block;font-size:25px;margin-top:10px}.section-title{display:flex;justify-content:space-between;align-items:center;margin:28px 0 15px}.project{background:white;border:1px solid var(--line);padding:18px;border-radius:18px;margin:10px 0;cursor:pointer}.project-top{display:flex;align-items:start;justify-content:space-between}.project h3{margin:0 0 8px;font-size:19px}.pill{display:inline-block;border-radius:99px;background:#eef4f0;color:#416456;font-size:12px;padding:5px 9px}.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.space{justify-content:space-between}.back{background:none;padding:6px 0;color:var(--accent);font-weight:750;margin-bottom:18px}.tabs{display:flex;gap:8px;overflow:auto;padding:3px 0 12px}.tab{flex:none;padding:10px 16px;background:#e8eeeb;border-radius:99px;color:#42534d}.tab.active{background:var(--ink);color:white}.empty{padding:30px 16px;border-radius:18px;border:1px dashed #cad9d0;color:var(--muted);text-align:center}.photo-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.photo-card{background:white;border-radius:16px;overflow:hidden;border:1px solid var(--line)}.photo-card img{width:100%;aspect-ratio:4/3;object-fit:cover;background:#e8ece8;display:block}.photo-info{padding:12px}.photo-info strong{display:block;font-size:14px}.photo-info small{color:var(--muted)}.form-col{display:grid;gap:7px;margin-bottom:15px}label{font-size:13px;font-weight:700}input:not([type=file]),textarea,select{width:100%;border:1px solid #dce4de;background:white;border-radius:12px;padding:13px;color:var(--ink)}textarea{min-height:90px;resize:vertical}.modal-bg{position:fixed;inset:0;background:#1423219c;z-index:20;display:flex;justify-content:center;align-items:end}.modal{background:#fff;max-height:94dvh;overflow:auto;width:min(100%,720px);padding:22px;border-radius:22px 22px 0 0}.modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}.close{border-radius:50%;background:#f0f3f0;width:36px;height:36px}.hidden{display:none!important}.footer{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);padding:10px 15px calc(12px + env(safe-area-inset-bottom));display:flex;justify-content:space-around;z-index:5}.nav{background:none;color:#73817a;font-size:12px;display:grid;gap:4px;place-items:center;min-width:65px}.nav span{font-size:23px}.nav.active{color:var(--accent);font-weight:800}.camera-view{position:relative;background:#101615;border-radius:15px;overflow:hidden}.camera-view video{display:block;width:100%;max-height:48vh;object-fit:cover}.draw{width:100%;touch-action:none;display:block;border-radius:12px;background:#edf0ed;max-height:58vh;object-fit:contain}.tools{display:flex;gap:8px;align-items:center;margin:12px 0;flex-wrap:wrap}.tools button{padding:9px 12px;border-radius:10px;background:#f0f4f0}.tools button.active{background:#cce8da}.note{font-size:12px;color:var(--muted);line-height:1.6}.item{padding:14px;border-radius:15px;background:white;border:1px solid var(--line);margin-bottom:10px}.report-photo{width:100%;max-width:250px;border-radius:8px}.status-requested{background:#fff3e3;color:#98600d}.status-progress{background:#e7f0fc;color:#28679c}.status-done{background:#def2e8;color:#1a7753}.danger{color:#b83e35}.btn-delete{background:#fff3f2;color:#a53630;border:1px solid #f0c7c3;border-radius:12px;padding:10px 12px;font-weight:700}.btn-delete:disabled{opacity:.4;cursor:not-allowed}.audio{width:100%;margin:8px 0}.bar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:15px 0}.noprint{}@media(min-width:700px){.photo-grid{grid-template-columns:repeat(3,1fr)}.modal-bg{align-items:center}.modal{border-radius:22px}.grid{grid-template-columns:repeat(4,1fr)}}@media print{body{background:white}.top,.footer,.noprint,.back,.tabs,.btn,.btn-light,.btn-outline{display:none!important}.shell{max-width:none;padding:0}#report-print{display:block!important}.report-page{break-inside:avoid;margin-bottom:22px}.report-photo{max-width:180px}}
 </style></head><body><main class="shell"><header class="top"><div class="brand">SITE NOTE <span style="color:#6d9e86">/ FIELD</span></div><small id="today"></small></header><div id="app"></div></main><nav class="footer"><button class="nav active" data-nav="home"><span>▦</span>프로젝트</button><button class="nav" data-nav="tasks"><span>☑</span>보수 관리</button><button class="nav" data-nav="backup"><span>▣</span>백업·설정</button></nav><div id="overlay" class="modal-bg hidden"><div class="modal" id="modal"></div></div><input type="file" id="importPhoto" accept="image/*" style="display:none"><input type="file" id="importBackup" accept="application/json,text/plain,.json,.txt" style="display:none"><div id="report-print" style="display:none"></div><script>
-'use strict';const $=s=>document.querySelector(s), app=$('#app'), overlay=$('#overlay'), modal=$('#modal');let db,view='home',projectId=null,tab='photos',cameraStream=null,recorder=null,recordChunks=[],drawState=null;let projects=[],photos=[],notes=[],tasks=[],audios=[];const uid=()=>crypto.randomUUID?.()||'id'+Date.now()+Math.random().toString(16).slice(2);const date=()=>new Date().toISOString().slice(0,10);const fmt=t=>new Date(t).toLocaleString('ko-KR');const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));function toast(s){alert(s)}
+'use strict';const $=s=>document.querySelector(s), app=$('#app'), overlay=$('#overlay'), modal=$('#modal');let db,view='home',projectId=null,tab='photos',cameraStream=null,recorder=null,recordChunks=[],drawState=null;let projects=[],photos=[],notes=[],tasks=[],audios=[];const uid=()=>crypto.randomUUID?.()||'id'+Date.now()+Math.random().toString(16).slice(2);const date=()=>{const d=new Date(),pad=n=>String(n).padStart(2,'0');return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`};const fmt=t=>new Date(t).toLocaleString('ko-KR');const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));function toast(s){alert(s)}
 const schema=['projects','photos','notes','tasks','audios'];function openDB(){return new Promise((ok,no)=>{let r=indexedDB.open('site-note-db',1);r.onupgradeneeded=()=>schema.forEach(n=>{if(!r.result.objectStoreNames.contains(n))r.result.createObjectStore(n,{keyPath:'id'})});r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error)})}function tx(name,mode='readonly'){return db.transaction(name,mode).objectStore(name)}function request(r){return new Promise((ok,no)=>{r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error)})}async function getAll(n){return request(tx(n).getAll())}async function put(n,o){await request(tx(n,'readwrite').put(o));await refresh()}async function del(n,id){await request(tx(n,'readwrite').delete(id));await refresh()}async function refresh(){[projects,photos,notes,tasks,audios]=await Promise.all(schema.map(getAll));render()}
 function showModal(html){modal.innerHTML=`<div class="modal-head"><h2>${html.title}</h2><button class="close" onclick="closeModal()">✕</button></div>${html.body}`;overlay.classList.remove('hidden')}function closeModal(){overlay.classList.add('hidden');if(cameraStream){cameraStream.getTracks().forEach(t=>t.stop());cameraStream=null}drawState=null}overlay.addEventListener('click',e=>{if(e.target===overlay)closeModal()});$('#today').textContent=new Date().toLocaleDateString('ko-KR',{year:'numeric',month:'short',day:'numeric'});
 function go(v){view=v;projectId=null;render()}function openProject(id){projectId=id;view='project';tab='photos';render()}function nav(){document.querySelectorAll('.nav').forEach(n=>n.classList.toggle('active',n.dataset.nav===view||(view==='project'&&n.dataset.nav==='home')))}function render(){nav();if(view==='home')return home();if(view==='project')return project();if(view==='tasks')return taskPage();if(view==='backup')return backupPage()}
@@ -9,7 +9,7 @@ function home(){let active=tasks.filter(t=>t.status!=='완료').length;app.inner
 function newProject(){showModal({title:'새 프로젝트',body:`<form id="projectForm"><div class="form-col"><label>현장명 *</label><input name="name" maxlength="80" required placeholder="예: 상무동 카페 리뉴얼"></div><div class="form-col"><label>현장 주소</label><input name="address" placeholder="예: 광주 서구 ..."></div><div class="form-col"><label>공사기간</label><input name="period" placeholder="예: 2026.11.20 ~ 2026.12.20"></div><div class="form-col"><label>담당자</label><input name="manager" placeholder="이름 또는 팀"></div><button class="btn" style="width:100%">프로젝트 저장</button></form>`});$('#projectForm').onsubmit=async e=>{e.preventDefault();const f=new FormData(e.currentTarget),id=uid();await put('projects',{id,name:f.get('name').trim(),address:f.get('address').trim(),period:f.get('period').trim(),manager:f.get('manager').trim(),status:'진행중',created:Date.now()});closeModal();openProject(id)}}
 function deleteProjectPrompt(id){const p=projects.find(x=>x.id===id);if(!p)return;const cp=photos.filter(x=>x.projectId===id).length,cn=notes.filter(x=>x.projectId===id).length,ct=tasks.filter(x=>x.projectId===id).length,ca=audios.filter(x=>x.projectId===id).length;showModal({title:'프로젝트 삭제',body:`<div class="item" style="background:#fff8f6;border-color:#f0c7c3"><strong>${esc(p.name)}</strong><p class="danger">삭제하면 이 프로젝트의 사진 ${cp}장, 작업일지 ${cn}건, 보수 기록 ${ct}건, 음성 ${ca}건도 함께 삭제되며 되돌릴 수 없습니다.</p><p class="note">삭제 전 최신 백업 파일이 iCloud Drive에 저장되어 있는지 확인해 주세요. 삭제해도 기존 iCloud 백업 파일은 자동으로 바뀌거나 삭제되지 않습니다.</p></div><div class="form-col"><label for="confirmDeleteName">실수로 삭제하지 않도록 프로젝트명 그대로 입력하세요.</label><input id="confirmDeleteName" autocomplete="off" placeholder="${esc(p.name)}"></div><div class="row"><button class="btn-delete" id="confirmProjectDelete" disabled>프로젝트와 관련 기록 삭제</button><button class="btn-outline" onclick="closeModal()">취소</button></div>`});const input=$('#confirmDeleteName'),button=$('#confirmProjectDelete');input.addEventListener('input',()=>button.disabled=input.value.trim()!==p.name);button.onclick=async()=>{button.disabled=true;button.textContent='삭제 중...';try{await deleteProjectAndContents(id);closeModal();projectId=null;view='home';await refresh();toast('프로젝트와 관련 기록을 삭제했습니다.')}catch(e){button.textContent='프로젝트와 관련 기록 삭제';button.disabled=false;toast('삭제 실패: '+e.message)}}}
 function deleteProjectAndContents(id){return new Promise((resolve,reject)=>{let transaction;try{transaction=db.transaction(schema,'readwrite');for(const name of schema){const store=transaction.objectStore(name);if(name==='projects'){store.delete(id)}else{const entries=({photos,notes,tasks,audios})[name].filter(item=>item.projectId===id);for(const entry of entries)store.delete(entry.id)}}transaction.oncomplete=()=>resolve();transaction.onerror=()=>reject(transaction.error||new Error('저장소 오류'));transaction.onabort=()=>reject(transaction.error||new Error('작업 취소'))}catch(e){if(transaction)try{transaction.abort()}catch(_){}reject(e)}})}
-function project(){let p=projects.find(x=>x.id===projectId);if(!p){go('home');return}let ps=photos.filter(x=>x.projectId===projectId).sort((a,b)=>b.created-a.created),ns=notes.filter(x=>x.projectId===projectId).sort((a,b)=>b.created-a.created),ts=tasks.filter(x=>x.projectId===projectId).sort((a,b)=>b.created-a.created),as=audios.filter(x=>x.projectId===projectId).sort((a,b)=>b.created-a.created);app.innerHTML=`<button class="back" onclick="go('home')">← 전체 프로젝트</button><div class="hero"><div><div class="muted small">PROJECT / ${new Date(p.created).getFullYear()}</div><h1>${esc(p.name)}</h1><div class="muted small">${esc(p.address||'주소 미입력')} ${p.manager?'· 담당 '+esc(p.manager):''}</div></div><div class="row"><button class="btn-outline" onclick="makeReport('${p.id}')">PDF 보고서</button><button class="btn-delete" onclick="deleteProjectPrompt('${p.id}')">프로젝트 삭제</button></div></div><div class="row" style="margin-bottom:18px"><button class="btn" onclick="launchCamera()">📷 사진 촬영</button><button class="btn-light" onclick="$('#importPhoto').click()">사진 가져오기</button></div><div class="tabs"><button class="tab ${tab==='photos'?'active':''}" onclick="setTab('photos')">사진 ${ps.length}</button><button class="tab ${tab==='notes'?'active':''}" onclick="setTab('notes')">작업일지 ${ns.length}</button><button class="tab ${tab==='tasks'?'active':''}" onclick="setTab('tasks')">보수 ${ts.length}</button><button class="tab ${tab==='audio'?'active':''}" onclick="setTab('audio')">음성 ${as.length}</button></div><div id="contents"></div>`;let box=$('#contents');if(tab==='photos')box.innerHTML=ps.length?`<div class="photo-grid">${ps.map(o=>`<div class="photo-card"><img alt="현장 사진" src="${o.preview||o.original}" onclick="openPhoto('${o.id}')"><div class="photo-info"><strong>${esc(o.label||'현장 사진')}</strong><small>${fmt(o.created)} · ${esc(o.trade||'미분류')}</small><div class="row" style="margin-top:10px"><button class="btn-light small" onclick="openPhoto('${o.id}')">스케치·기록</button></div></div></div>`).join('')}</div>`:`<div class="empty">사진이 없습니다.<p>앱 카메라로 촬영하면 기본 사진 앨범 저장 없이 앱에 보관합니다.</p></div>`;if(tab==='notes')box.innerHTML=`<div class="bar"><span class="muted small">날짜별 작업 내용</span><button class="btn" onclick="newNote()">+ 작업일지</button></div>${ns.length?ns.map(n=>`<div class="item"><strong>${esc(n.title)}</strong><span class="pill" style="margin-left:8px">${esc(n.trade)}</span><p>${esc(n.content).replace(/\n/g,'<br>')}</p><div class="row space"><small class="muted">${fmt(n.created)}</small><button class="btn-outline small danger" onclick="removeItem('notes','${n.id}')">삭제</button></div></div>`).join(''):'<div class="empty">아직 작성한 작업일지가 없습니다.</div>'}`;if(tab==='tasks')box.innerHTML=`<div class="bar"><span class="muted small">수정 요청·진행·완료 이력</span><button class="btn" onclick="newTask()">+ 보수 요청</button></div>${ts.length?ts.map(taskHTML).join(''):'<div class="empty">등록된 보수 요청이 없습니다.</div>'}`;if(tab==='audio')box.innerHTML=`<div class="bar"><span class="muted small">녹음 파일은 앱 안에 저장됩니다.</span><button class="btn" onclick="newAudio()">+ 음성 기록</button></div>${as.length?as.map(audioHTML).join(''):'<div class="empty">등록된 음성 메모가 없습니다.</div>'}`}
+function project(){let p=projects.find(x=>x.id===projectId);if(!p){go('home');return}let ps=photos.filter(x=>x.projectId===projectId).sort((a,b)=>b.created-a.created),ns=notes.filter(x=>x.projectId===projectId).sort((a,b)=>b.created-a.created),ts=tasks.filter(x=>x.projectId===projectId).sort((a,b)=>b.created-a.created),as=audios.filter(x=>x.projectId===projectId).sort((a,b)=>b.created-a.created);app.innerHTML=`<button class="back" onclick="go('home')">← 전체 프로젝트</button><div class="hero"><div><div class="muted small">PROJECT / ${new Date(p.created).getFullYear()}</div><h1>${esc(p.name)}</h1><div class="muted small">${esc(p.address||'주소 미입력')} ${p.manager?'· 담당 '+esc(p.manager):''}</div></div><div class="row"><button class="btn-outline" onclick="createDirectPdf('${p.id}')">PDF 파일 만들기</button><button class="btn-delete" onclick="deleteProjectPrompt('${p.id}')">프로젝트 삭제</button></div></div><div class="row" style="margin-bottom:18px"><button class="btn" onclick="launchCamera()">📷 사진 촬영</button><button class="btn-light" onclick="$('#importPhoto').click()">사진 가져오기</button></div><div class="tabs"><button class="tab ${tab==='photos'?'active':''}" onclick="setTab('photos')">사진 ${ps.length}</button><button class="tab ${tab==='notes'?'active':''}" onclick="setTab('notes')">작업일지 ${ns.length}</button><button class="tab ${tab==='tasks'?'active':''}" onclick="setTab('tasks')">보수 ${ts.length}</button><button class="tab ${tab==='audio'?'active':''}" onclick="setTab('audio')">음성 ${as.length}</button></div><div id="contents"></div>`;let box=$('#contents');if(tab==='photos')box.innerHTML=ps.length?`<div class="photo-grid">${ps.map(o=>`<div class="photo-card"><img alt="현장 사진" src="${o.preview||o.original}" onclick="openPhoto('${o.id}')"><div class="photo-info"><strong>${esc(o.label||'현장 사진')}</strong><small>${fmt(o.created)} · ${esc(o.trade||'미분류')}</small><div class="row" style="margin-top:10px"><button class="btn-light small" onclick="openPhoto('${o.id}')">스케치·기록</button></div></div></div>`).join('')}</div>`:`<div class="empty">사진이 없습니다.<p>앱 카메라로 촬영하면 기본 사진 앨범 저장 없이 앱에 보관합니다.</p></div>`;if(tab==='notes')box.innerHTML=`<div class="bar"><span class="muted small">날짜별 작업 내용</span><button class="btn" onclick="newNote()">+ 작업일지</button></div>${ns.length?ns.map(n=>`<div class="item"><strong>${esc(n.title)}</strong><span class="pill" style="margin-left:8px">${esc(n.trade)}</span><p>${esc(n.content).replace(/\n/g,'<br>')}</p><div class="row space"><small class="muted">${fmt(n.created)}</small><button class="btn-outline small danger" onclick="removeItem('notes','${n.id}')">삭제</button></div></div>`).join(''):'<div class="empty">아직 작성한 작업일지가 없습니다.</div>'}`;if(tab==='tasks')box.innerHTML=`<div class="bar"><span class="muted small">수정 요청·진행·완료 이력</span><button class="btn" onclick="newTask()">+ 보수 요청</button></div>${ts.length?ts.map(taskHTML).join(''):'<div class="empty">등록된 보수 요청이 없습니다.</div>'}`;if(tab==='audio')box.innerHTML=`<div class="bar"><span class="muted small">녹음 파일은 앱 안에 저장됩니다.</span><button class="btn" onclick="newAudio()">+ 음성 기록</button></div>${as.length?as.map(audioHTML).join(''):'<div class="empty">등록된 음성 메모가 없습니다.</div>'}`}
 function setTab(t){tab=t;render()}async function launchCamera(){showModal({title:'현장 사진 촬영',body:`<div class="camera-view"><video id="camera" autoplay playsinline muted></video></div><div class="row" style="margin-top:15px"><button class="btn" id="snap">촬영·앱에 저장</button><button class="btn-outline" onclick="closeModal()">취소</button></div><p class="note">HTTPS 환경과 카메라 권한이 필요합니다. 사진 앱으로 자동 내보내지 않습니다.</p>`});try{cameraStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false});$('#camera').srcObject=cameraStream;$('#snap').onclick=async()=>{const v=$('#camera'),c=document.createElement('canvas');c.width=v.videoWidth;c.height=v.videoHeight;if(!c.width)return toast('카메라 준비 중입니다.');c.getContext('2d').drawImage(v,0,0);let data=c.toDataURL('image/jpeg',.82);await savePhoto(data);closeModal()}}catch(e){modal.querySelector('.camera-view').innerHTML='<p style="color:white;padding:20px">카메라 권한이 없거나 지원되지 않습니다.</p>';$('#snap').disabled=true}}
 async function savePhoto(data){await put('photos',{id:uid(),projectId,original:data,preview:null,label:'현장 사진',trade:'미분류',memo:'',created:Date.now()});tab='photos';render()}$('#importPhoto').onchange=async e=>{let f=e.target.files[0];if(!f||!projectId)return;const r=new FileReader();r.onload=async()=>{await savePhoto(r.result);e.target.value=''};r.readAsDataURL(f)};
 function openPhoto(id){let p=photos.find(x=>x.id===id);if(!p)return;showModal({title:'사진 스케치·시공 기록',body:`<canvas id="drawCanvas" class="draw"></canvas><div class="tools"><button id="penBtn" class="active" onclick="tool('pen')">펜</button><button id="arrowBtn" onclick="tool('arrow')">화살표</button><button onclick="undo()">↶ 실행 취소</button><label>색상 <input id="penColor" type="color" value="#e43636" style="vertical-align:middle;width:40px;height:34px"></label><label>굵기 <input id="penWidth" type="range" min="2" max="18" value="5" style="vertical-align:middle;width:85px"></label></div><div class="form-col"><label>사진명</label><input id="photoLabel" value="${esc(p.label)}"></div><div class="form-col"><label>공종</label><select id="photoTrade">${['미분류','철거','목공','전기','설비','도장','타일','금속','가구','마감','기타'].map(x=>`<option ${p.trade===x?'selected':''}>${x}</option>`).join('')}</select></div><div class="form-col"><label>현장 메모</label><textarea id="photoMemo" placeholder="치수, 문제점, 요청사항">${esc(p.memo)}</textarea></div><div class="row"><button class="btn" onclick="saveMarked('${id}')">스케치·기록 저장</button><button class="btn-outline" onclick="downloadPhoto('${id}')">사진 내보내기</button><button class="btn-outline danger" onclick="removePhoto('${id}')">삭제</button></div><p class="note">원본은 유지되고 스케치본은 별도로 보관됩니다. 치수는 실제 측정값을 메모로 남겨주세요.</p>`});setupDraw(p.preview||p.original)}
@@ -49,9 +49,192 @@ function makeReport(id){
   win.document.close();
 }
 
+
+// 사용자의 기기 내부에서 PDF 파일을 직접 만듭니다. 외부 라이브러리/서버는 사용하지 않습니다.
+let preparedReportPDF=null;
+const pdfReportFont='-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif';
+function pdfReportDate(t){try{return new Date(t).toLocaleDateString('ko-KR')}catch(e){return ''}}
+function pdfReportWrap(ctx,str,maxWidth){
+  const result=[];
+  for(const paragraph of String(str??'').replace(/\r/g,'').split('\n')){
+    if(!paragraph){result.push('');continue}
+    let line='';
+    for(const char of paragraph){
+      const test=line+char;
+      if(line&&ctx.measureText(test).width>maxWidth){result.push(line);line=char}else line=test;
+    }
+    if(line)result.push(line);
+  }
+  return result;
+}
+function pdfReportImage(src){return new Promise((resolve,reject)=>{
+  if(!src)return resolve(null);
+  const im=new Image();
+  im.onload=()=>resolve(im);
+  im.onerror=()=>reject(Error('이미지를 불러오지 못했습니다.'));
+  im.src=src;
+})}
+function pdfReportBytes(base64){
+  const bin=atob(base64),arr=new Uint8Array(bin.length);
+  for(let i=0;i<bin.length;i++)arr[i]=bin.charCodeAt(i);
+  return arr;
+}
+function pdfReportAssemble(pages){
+  if(!pages.length)throw Error('PDF로 저장할 페이지가 없습니다.');
+  const enc=new TextEncoder(),chunks=[],offsets=[0];let total=0;
+  function push(data){chunks.push(data);total+=data.length}
+  function put(str){push(enc.encode(str))}
+  function obj(id,content){offsets[id]=total;put(id+' 0 obj\n'+content+'\nendobj\n')}
+  put('%PDF-1.4\n%PDFSITE\n');
+  obj(1,'<< /Type /Catalog /Pages 2 0 R >>');
+  const kids=pages.map((_,i)=>(3+i*3)+' 0 R').join(' ');
+  obj(2,`<< /Type /Pages /Kids [${kids}] /Count ${pages.length} >>`);
+  for(let i=0;i<pages.length;i++){
+    const n=3+i*3,page=pages[i],contents='q\n595.28 0 0 841.89 0 0 cm\n/Im0 Do\nQ\n';
+    obj(n,`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /XObject << /Im0 ${n+2} 0 R >> >> /Contents ${n+1} 0 R >>`);
+    obj(n+1,`<< /Length ${enc.encode(contents).length} >>\nstream\n${contents}endstream`);
+    offsets[n+2]=total;
+    put(`${n+2} 0 obj\n<< /Type /XObject /Subtype /Image /Width ${page.width} /Height ${page.height} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${page.jpeg.length} >>\nstream\n`);
+    push(page.jpeg);
+    put('\nendstream\nendobj\n');
+  }
+  const start=total;
+  put(`xref\n0 ${pages.length*3+3}\n0000000000 65535 f \n`);
+  for(let i=1;i<=pages.length*3+2;i++)put(String(offsets[i]).padStart(10,'0')+' 00000 n \n');
+  put(`trailer\n<< /Size ${pages.length*3+3} /Root 1 0 R >>\nstartxref\n${start}\n%%EOF`);
+  const all=new Uint8Array(total);let p=0;
+  for(const chunk of chunks){all.set(chunk,p);p+=chunk.length}
+  return new Blob([all],{type:'application/pdf'});
+}
+async function pdfReportBuild(selected){
+  const W=1120,H=1584,M=66,RIGHT=W-M,BOTTOM=H-80,ink='#23312d',gray='#71817a',green='#246650';
+  const pages=[];let cvs=null,ctx=null,y=0,number=0;
+  function fill(x,yy,w,h,c){ctx.fillStyle=c;ctx.fillRect(x,yy,w,h)}
+  function font(px,bold=false,color=ink){ctx.font=(bold?'700 ':'400 ')+px+'px '+pdfReportFont;ctx.fillStyle=color;ctx.textBaseline='top'}
+  function line(str,x,yy,px=23,bold=false,color=ink){font(px,bold,color);ctx.fillText(str,x,yy)}
+  function fresh(){
+    cvs=document.createElement('canvas');cvs.width=W;cvs.height=H;
+    ctx=cvs.getContext('2d',{alpha:false});fill(0,0,W,H,'#ffffff');number++;
+    line('SITE NOTE  /  FIELD REPORT',M,31,20,true,green);
+    fill(M,75,RIGHT-M,2,'#cfddd5');y=104;
+  }
+  function finish(){
+    if(!cvs)return;
+    fill(M,H-59,RIGHT-M,1,'#e2e8e4');
+    line('현장노트 · 조회용 PDF  |  원본 복원은 JSON 백업 사용',M,H-47,15,false,gray);
+    line(String(number),RIGHT-24,H-47,15,false,gray);
+    const jpg=cvs.toDataURL('image/jpeg',0.87);
+    pages.push({width:W,height:H,jpeg:pdfReportBytes(jpg.split(',')[1])});
+    cvs.width=1;cvs.height=1;
+  }
+  function need(height){if(y+height>BOTTOM){finish();fresh()}}
+  function text(str,indent=0,px=23,lh=34,color=ink,bold=false){
+    font(px,bold,color);
+    const rows=pdfReportWrap(ctx,str,RIGHT-M-indent);
+    for(const item of rows){need(lh);line(item,M+indent,y,px,bold,color);y+=lh}
+  }
+  function title(t){need(76);line(t,M,y,27,true,green);y+=49;fill(M,y,RIGHT-M,1,'#cedbd2');y+=21}
+  function detail(head,desc,meta){
+    need(102);line(head,M,y,23,true,ink);y+=37;
+    if(meta){text(meta,0,18,27,gray)}
+    text(desc||'내용 없음',0,20,31,ink);y+=21;
+  }
+  function padding(){need(35);y+=29}
+  fresh();
+  for(const p of selected){
+    need(250);line(p.name||'이름 없는 현장',M,y,39,true,ink);y+=64;
+    text('현장 주소  '+(p.address||'미입력'),0,21,35);
+    text('공사기간  '+(p.period||'미입력'),0,21,35);
+    text('담당자  '+(p.manager||'미입력'),0,21,35);
+    text('작성일  '+date(),0,21,35);y+=23;
+    const ps=photos.filter(x=>x.projectId===p.id).sort((a,b)=>a.created-b.created);
+    const ns=notes.filter(x=>x.projectId===p.id).sort((a,b)=>a.created-b.created);
+    const ts=tasks.filter(x=>x.projectId===p.id).sort((a,b)=>a.created-b.created);
+    const aud=audios.filter(x=>x.projectId===p.id).sort((a,b)=>a.created-b.created);
+    need(65);fill(M,y,RIGHT-M,50,'#eaf3ed');
+    line(`사진 ${ps.length}     작업일지 ${ns.length}     보수 ${ts.length}     음성 ${aud.length}`,M+17,y+11,22,true,green);y+=84;
+    title('01 / 현장 사진');
+    if(!ps.length)text('현장 사진 없음',0,20,32,gray);
+    const GAP=24,CW=(RIGHT-M-GAP)/2,PH=315;
+    for(let i=0;i<ps.length;i+=2){
+      need(445);
+      const rowTop=y,row=ps.slice(i,i+2);
+      for(let j=0;j<row.length;j++){
+        const photo=row[j],x=M+j*(CW+GAP);
+        fill(x,rowTop,CW,PH,'#f2f5f3');
+        try{
+          const im=await pdfReportImage(photo.preview||photo.original);
+          if(im){const scale=Math.min(CW/im.width,PH/im.height);const iw=im.width*scale,ih=im.height*scale;ctx.drawImage(im,x+(CW-iw)/2,rowTop+(PH-ih)/2,iw,ih)}
+        }catch(e){line('사진 읽기 실패',x+20,rowTop+20,19,false,gray)}
+        font(18,true,ink);
+        const caption=pdfReportWrap(ctx,(i+j+1)+'. '+(photo.label||'현장 사진'),CW);
+        const cap=caption.slice(0,2);
+        cap.forEach((z,k)=>line(z,x,rowTop+PH+10+k*23,18,true,ink));
+        font(17,false,gray);
+        const meta=pdfReportWrap(ctx,(photo.trade||'미분류')+' / '+pdfReportDate(photo.created),CW).slice(0,1);
+        meta.forEach((z,k)=>line(z,x,rowTop+PH+58+k*21,17,false,gray));
+        if(photo.memo){font(17,false,ink);const memo=pdfReportWrap(ctx,photo.memo,CW).slice(0,2);memo.forEach((z,k)=>line(z,x,rowTop+PH+83+k*22,17,false,ink))}
+      }
+      y+=445;
+    }
+    padding();title('02 / 작업일지');
+    if(!ns.length)text('작성된 작업일지 없음',0,20,32,gray);
+    for(const n of ns){detail(n.title||'작업 기록',n.content,n.trade+' / '+pdfReportDate(n.created))}
+    padding();title('03 / 보수 관리');
+    if(!ts.length)text('등록된 보수 기록 없음',0,20,32,gray);
+    for(const t of ts){detail(t.title||'보수 기록',t.content,(t.status||'요청')+' / '+(t.owner||'담당 미정'))}
+    if(aud.length){padding();title('04 / 음성 메모 텍스트');for(const a of aud)detail(a.title||'음성 메모',a.text||'(텍스트 기록 없음. 음성 파일은 PDF에 포함되지 않습니다.)',pdfReportDate(a.created))}
+    // 두 프로젝트의 내용이 같은 페이지에서 겹치지 않도록 분리
+    if(selected.indexOf(p)!==selected.length-1){finish();fresh()}
+  }
+  finish();
+  return pdfReportAssemble(pages);
+}
+function pdfReportFilename(name){
+  const safe=String(name||'현장').replace(/[\\/:*?"<>|\x00-\x1f]/g,'_').slice(0,60);
+  return `현장노트_${safe}_${date()}.pdf`;
+}
+async function createDirectPdf(id){
+  const selected=id==='all'?projects.slice().sort((a,b)=>b.created-a.created):projects.filter(p=>p.id===id);
+  if(!selected.length){toast('PDF 보고서로 저장할 프로젝트가 없습니다.');return}
+  preparedReportPDF=null;
+  showModal({title:'PDF 파일 만들기',body:'<p>보고서 PDF 파일을 생성하고 있습니다. 사진이 많으면 조금 더 걸릴 수 있습니다.</p>'});
+  try{
+    const blob=await pdfReportBuild(selected);
+    const filename=pdfReportFilename(id==='all'?'전체현장':selected[0].name);
+    preparedReportPDF={blob,filename};
+    showModal({title:'PDF 파일 준비 완료',body:`<p>실제 PDF 파일이 만들어졌습니다. <strong>${esc(filename)}</strong></p><p class="note">iPhone에서 iCloud Drive에 저장하려면 아래 <strong>iCloud에 저장하기</strong>를 누르고 공유 메뉴의 <strong>파일에 저장</strong>을 선택하세요. 저장 완료는 파일 앱에서 확인해야 합니다.</p><div class="row"><button class="btn" id="shareDirectPdf">iCloud에 저장하기 (공유)</button><button class="btn-outline" id="openDirectPdf">PDF 열기·다운로드</button></div><p class="note" id="pdfSaveStatus" role="status" aria-live="polite">PDF 크기: ${(blob.size/1024/1024).toFixed(2)}MB. 인쇄 기능을 사용하지 않습니다.</p>`});
+    $('#shareDirectPdf').onclick=shareDirectPdf;
+    $('#openDirectPdf').onclick=openDirectPdf;
+  }catch(e){showModal({title:'PDF 만들기 실패',body:`<p class="danger">${esc(e.message)}</p><p>기존 현장 데이터는 변경되지 않았습니다.</p>`})}
+}
+async function shareDirectPdf(){
+  if(!preparedReportPDF)return;
+  const {blob,filename}=preparedReportPDF,el=$('#pdfSaveStatus');
+  try{
+    const f=new File([blob],filename,{type:'application/pdf'});
+    if(typeof navigator.share==='function'&&(!navigator.canShare||navigator.canShare({files:[f]}))){
+      await navigator.share({files:[f],title:filename});
+      if(el)el.textContent='공유 메뉴를 닫았습니다. 파일 앱의 iCloud Drive에서 실제 저장 여부를 확인하세요.';
+    }else{
+      if(el)el.textContent='이 브라우저에서는 파일 공유가 지원되지 않습니다. PDF 열기·다운로드를 눌러 저장하세요.';
+    }
+  }catch(e){
+    if(el)el.textContent=e.name==='AbortError'?'공유가 취소되었습니다.':'파일 공유 실패: '+e.message+' — 오른쪽 PDF 열기·다운로드를 이용하세요.';
+  }
+}
+function openDirectPdf(){
+  if(!preparedReportPDF)return;
+  const {blob,filename}=preparedReportPDF;
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download=filename;a.style.display='none';document.body.appendChild(a);a.click();a.remove();
+  const el=$('#pdfSaveStatus');if(el)el.textContent='PDF 다운로드를 요청했습니다. Safari 다운로드 목록 또는 파일 앱에서 확인하세요.';
+  setTimeout(()=>URL.revokeObjectURL(url),60000);
+}
+
 function backupPage(){
-  const reportButtons=projects.length?projects.slice().sort((a,b)=>b.created-a.created).map(p=>`<div class="bar" style="padding:10px 0;border-bottom:1px solid var(--line)"><div style="min-width:0"><strong>${esc(p.name)}</strong><div class="muted small">사진 ${photos.filter(x=>x.projectId===p.id).length}장 · 작업일지 ${notes.filter(x=>x.projectId===p.id).length}건</div></div><button class="btn-outline small" onclick="makeReport('${p.id}')">PDF 보기·저장</button></div>`).join(''):'<div class="empty">등록된 프로젝트가 없습니다. 먼저 현장을 추가해 주세요.</div>';
-  app.innerHTML=`<h1>백업 · 설정</h1><p class="muted">현장 기록은 현재 기기의 앱 저장공간에 보관됩니다. <strong>PDF는 열어보는 문서</strong>, <strong>JSON은 앱 복원용 파일</strong>입니다. 둘 다 iCloud Drive에 보관하는 것을 권장합니다.</p><div class="item"><h2>현장 보고서 PDF</h2><p class="muted small">현장 사진·스케치 이미지·작업일지·보수 관리 내용을 PDF로 볼 수 있게 정리합니다. 아이폰에서 <strong>PDF 보기·저장 → 인쇄 / PDF 저장 → 공유 → 파일에 저장 → iCloud Drive → 현장노트</strong> 순서로 저장하세요. PDF가 자동으로 iCloud에 올라가지는 않습니다.</p>${reportButtons}${projects.length?'<button class="btn" style="margin-top:12px;width:100%" onclick="makeReport(\'all\')">전체 프로젝트 PDF로 보기·저장</button>':''}<p class="note">PDF에는 사진과 텍스트 메모가 포함됩니다. 녹음한 음성 파일 자체는 포함되지 않습니다. PDF 파일은 앱에 기록을 복원하는 용도로 사용할 수 없습니다.</p></div><div class="item"><h2>앱 복구용 백업(JSON)</h2><p class="muted small">JSON은 사람이 읽기 위한 문서가 아니라 <strong>프로젝트·사진 원본·스케치·작업일지·보수·음성 파일을 다시 앱에 넣기 위한 복구용 백업</strong>입니다. 삭제하지 말고 iCloud Drive에 따로 보관해 주세요.</p><div class="row"><button class="btn-outline" onclick="exportBackup()">복원용 JSON 파일 다운로드</button><button class="btn-outline" onclick="shareBackup()">공유 메뉴로 보내기</button></div><p id="backupStatus" class="note" role="status" aria-live="polite">다운로드한 JSON 파일은 파일 앱에서 확인한 후 iCloud Drive → 현장노트 폴더로 저장하세요. 이 앱은 iCloud 저장 완료 여부를 직접 확인할 수 없습니다.</p></div><div class="item"><h2>JSON 백업에서 복원</h2><p class="muted small">iCloud Drive 또는 컴퓨터에 보관한 JSON(.json 또는 .txt) 백업 파일을 선택하세요. 기존 기록에 백업 내용을 합치며 동일한 ID는 백업 파일의 내용으로 교체됩니다.</p><button class="btn-outline" onclick="$('#importBackup').click()">JSON 백업 파일 선택·복원</button></div><div class="item"><h2>사진 앨범 분리</h2><p>현장노트 카메라로 촬영한 사진은 기본 사진 앱에 자동 저장되지 않습니다. 앱 내부 저장소에 저장되며 위 JSON 백업 파일에 포함됩니다.</p><p class="note">브라우저 데이터 삭제·휴대폰 교체·저장공간 정리 등으로 앱 내부 기록이 사라질 수 있으므로 정기적으로 JSON 백업을 보관하세요.</p></div><div class="item"><h2>아이폰 설치</h2><p>HTTPS 주소에서 Safari로 열기 → 공유 → 홈 화면에 추가 → 추가</p></div>`;
+  const reportButtons=projects.length?projects.slice().sort((a,b)=>b.created-a.created).map(p=>`<div class="bar" style="padding:10px 0;border-bottom:1px solid var(--line)"><div style="min-width:0"><strong>${esc(p.name)}</strong><div class="muted small">사진 ${photos.filter(x=>x.projectId===p.id).length}장 · 작업일지 ${notes.filter(x=>x.projectId===p.id).length}건</div></div><button class="btn-outline small" onclick="createDirectPdf('${p.id}')">PDF 파일 만들기</button></div>`).join(''):'<div class="empty">등록된 프로젝트가 없습니다. 먼저 현장을 추가해 주세요.</div>';
+  app.innerHTML=`<h1>백업 · 설정</h1><p class="muted">현장 기록은 현재 기기의 앱 저장공간에 보관됩니다. <strong>PDF는 열어보는 문서</strong>, <strong>JSON은 앱 복원용 파일</strong>입니다. 둘 다 iCloud Drive에 보관하는 것을 권장합니다.</p><div class="item"><h2>현장 보고서 PDF</h2><p class="muted small">현장 사진·스케치 이미지·작업일지·보수 관리 내용을 PDF로 볼 수 있게 정리합니다. 아이폰에서 <strong>PDF 파일 만들기 → iCloud에 저장하기(공유) → 파일에 저장 → iCloud Drive → 현장노트</strong> 순서로 저장하세요. PDF 파일은 직접 만들어지지만 iCloud Drive에 저장하려면 공유 메뉴에서 저장을 선택해야 합니다.</p>${reportButtons}${projects.length?'<button class="btn" style="margin-top:12px;width:100%" onclick="createDirectPdf(\'all\')">전체 프로젝트 PDF 파일 만들기</button>':''}<p class="note">PDF에는 사진과 텍스트 메모가 이미지 기반 페이지로 포함됩니다. 글자 검색·복사는 제한될 수 있습니다. 녹음한 음성 파일 자체는 포함되지 않습니다. PDF 파일은 앱에 기록을 복원하는 용도로 사용할 수 없습니다.</p></div><div class="item"><h2>앱 복구용 백업(JSON)</h2><p class="muted small">JSON은 사람이 읽기 위한 문서가 아니라 <strong>프로젝트·사진 원본·스케치·작업일지·보수·음성 파일을 다시 앱에 넣기 위한 복구용 백업</strong>입니다. 삭제하지 말고 iCloud Drive에 따로 보관해 주세요.</p><div class="row"><button class="btn-outline" onclick="exportBackup()">복원용 JSON 파일 다운로드</button><button class="btn-outline" onclick="shareBackup()">공유 메뉴로 보내기</button></div><p id="backupStatus" class="note" role="status" aria-live="polite">다운로드한 JSON 파일은 파일 앱에서 확인한 후 iCloud Drive → 현장노트 폴더로 저장하세요. 이 앱은 iCloud 저장 완료 여부를 직접 확인할 수 없습니다.</p></div><div class="item"><h2>JSON 백업에서 복원</h2><p class="muted small">iCloud Drive 또는 컴퓨터에 보관한 JSON(.json 또는 .txt) 백업 파일을 선택하세요. 기존 기록에 백업 내용을 합치며 동일한 ID는 백업 파일의 내용으로 교체됩니다.</p><button class="btn-outline" onclick="$('#importBackup').click()">JSON 백업 파일 선택·복원</button></div><div class="item"><h2>사진 앨범 분리</h2><p>현장노트 카메라로 촬영한 사진은 기본 사진 앱에 자동 저장되지 않습니다. 앱 내부 저장소에 저장되며 위 JSON 백업 파일에 포함됩니다.</p><p class="note">브라우저 데이터 삭제·휴대폰 교체·저장공간 정리 등으로 앱 내부 기록이 사라질 수 있으므로 정기적으로 JSON 백업을 보관하세요.</p></div><div class="item"><h2>아이폰 설치</h2><p>HTTPS 주소에서 Safari로 열기 → 공유 → 홈 화면에 추가 → 추가</p></div>`;
 }
 
 function backupPayload(){let all={app:'site-note',version:1,exportedAt:new Date().toISOString()};const snapshot={projects,photos,notes,tasks,audios};for(const n of schema)all[n]=snapshot[n];return JSON.stringify(all)}
