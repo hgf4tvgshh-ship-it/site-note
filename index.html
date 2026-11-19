@@ -54,6 +54,10 @@
 .viewer-top button,.viewer-bottom button{pointer-events:auto;min-height:44px;padding:10px 13px;border-radius:12px;background:#1c2925e8;color:#fff;border:1px solid #ffffff38;font-weight:700;font-size:13px}
 .viewer-bottom button[aria-pressed=true]{background:#d5efdf;color:#153d2b}.viewer-title{font-size:13px;font-weight:700;text-shadow:0 1px 6px #000}.viewer-hint{flex-basis:100%;text-align:center;font-size:11px;color:#ebf2ed;pointer-events:none}
 @media(max-width:420px){.top small{font-size:11px}.top .brand{font-size:10px;letter-spacing:2px}.modal-head h2{font-size:16px}.viewer-bottom{gap:6px}.viewer-bottom button{padding:10px 11px}}
+.viewer-top{display:grid;grid-template-columns:max-content minmax(0,1fr) max-content;gap:6px;padding-left:max(10px,env(safe-area-inset-left));padding-right:max(10px,env(safe-area-inset-right))}
+.viewer-top .viewer-title{text-align:center;word-break:keep-all;line-height:1.45}
+.viewer-top button,.viewer-bottom button{box-sizing:border-box;width:auto;height:auto;min-width:max-content;white-space:nowrap;line-height:1.5;-webkit-text-size-adjust:100%}
+@media(max-width:420px){.viewer-top button{padding:9px 11px}}
 @media print{#appBack,#photoViewer,.modal-back{display:none!important}}
 </style></head><body><main class="shell"><header class="top"><button id="appBack" class="app-back hidden" type="button" onclick="appGoBack()" aria-label="이전 화면으로 돌아가기">← 뒤로</button><div class="brand">SITE NOTE <span style="color:#6d9e86">/ FIELD</span></div><small id="today"></small></header><div id="app"></div></main><nav class="footer"><button class="nav active" data-nav="home"><span>▦</span>프로젝트</button><button class="nav" data-nav="tasks"><span>☑</span>보수 관리</button><button class="nav" data-nav="backup"><span>▣</span>백업·설정</button></nav><div id="overlay" class="modal-bg hidden"><div class="modal" id="modal"></div></div><input type="file" id="importPhoto" accept="image/*" style="display:none"><input type="file" id="importBackup" accept="application/json,text/plain,.json,.txt" style="display:none"><div id="report-print" style="display:none"></div><script>
 'use strict';
