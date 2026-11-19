@@ -29,6 +29,17 @@
 .photo-pair figcaption{text-align:center;margin-top:5px;font-size:11px;font-weight:700;color:#527061}
 .photo-card .single-photo{width:100%;aspect-ratio:4/3;object-fit:cover;background:#e8ece8;display:block}
 @media(max-width:550px){.editor-viewport{height:66dvh;min-height:300px}.editor-actions button{padding:9px;font-size:11px}.editor-text-tools{grid-template-columns:1fr}}
+/* 사진 위 텍스트는 편집 가능한 별도 레이어로 관리 */
+.editor-stage #editorTextCanvas{position:absolute;left:0;top:0;pointer-events:none}
+.editor-viewport.move-active{cursor:move}
+.editor-text-tools{grid-template-columns:1fr}
+.editor-text-options{display:flex;flex-wrap:wrap;gap:7px;align-items:center}
+.editor-text-options label{display:flex;align-items:center;gap:5px}
+.editor-text-options select{width:auto;padding:7px 8px;font-size:13px;min-height:36px}
+.editor-text-actions{display:flex;gap:7px;flex-wrap:wrap}
+.editor-text-actions button{padding:9px 12px;border:0;border-radius:9px;background:#dcece2;color:#153d2b;font-weight:700}
+.editor-text-actions button:disabled{opacity:.4;cursor:not-allowed}
+.editor-text-selected{font-size:12px;color:#286249;line-height:1.5}
 </style></head><body><main class="shell"><header class="top"><div class="brand">SITE NOTE <span style="color:#6d9e86">/ FIELD</span></div><small id="today"></small></header><div id="app"></div></main><nav class="footer"><button class="nav active" data-nav="home"><span>▦</span>프로젝트</button><button class="nav" data-nav="tasks"><span>☑</span>보수 관리</button><button class="nav" data-nav="backup"><span>▣</span>백업·설정</button></nav><div id="overlay" class="modal-bg hidden"><div class="modal" id="modal"></div></div><input type="file" id="importPhoto" accept="image/*" style="display:none"><input type="file" id="importBackup" accept="application/json,text/plain,.json,.txt" style="display:none"><div id="report-print" style="display:none"></div><script>
 'use strict';const $=s=>document.querySelector(s), app=$('#app'), overlay=$('#overlay'), modal=$('#modal');let db,view='home',projectId=null,tab='photos',cameraStream=null,recorder=null,recordChunks=[],drawState=null;let projects=[],photos=[],notes=[],tasks=[],audios=[];const uid=()=>crypto.randomUUID?.()||'id'+Date.now()+Math.random().toString(16).slice(2);const date=()=>{const d=new Date(),pad=n=>String(n).padStart(2,'0');return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`};const fmt=t=>new Date(t).toLocaleString('ko-KR');const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));function toast(s){alert(s)}
 const schema=['projects','photos','notes','tasks','audios'];function openDB(){return new Promise((ok,no)=>{let r=indexedDB.open('site-note-db',1);r.onupgradeneeded=()=>schema.forEach(n=>{if(!r.result.objectStoreNames.contains(n))r.result.createObjectStore(n,{keyPath:'id'})});r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error)})}function tx(name,mode='readonly'){return db.transaction(name,mode).objectStore(name)}function request(r){return new Promise((ok,no)=>{r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error)})}async function getAll(n){return request(tx(n).getAll())}async function put(n,o){await request(tx(n,'readwrite').put(o));markBackupDataChanged();await refresh()}async function del(n,id){await request(tx(n,'readwrite').delete(id));markBackupDataChanged();await refresh()}async function refresh(){[projects,photos,notes,tasks,audios]=await Promise.all(schema.map(getAll));render()}
@@ -97,11 +108,12 @@ function openPhoto(id){
   const p=photos.find(x=>x.id===id);if(!p)return;
   const trades=['미분류','철거','목공','전기','설비','도장','타일','금속','가구','마감','기타'];
   showModal({editor:true,title:'사진 확대 · 스케치 · 텍스트',body:`<div class="editor-body">
-    <div id="editorViewport" class="editor-viewport" aria-label="사진 스케치 영역 - 두 손가락으로 확대하거나 이동 모드를 선택하세요"><div id="editorStage" class="editor-stage"><canvas id="drawCanvas" aria-label="스케치 캔버스"></canvas></div><div class="editor-hint">두 손가락 확대·이동 / 이동 도구로 화면 끌기</div></div>
+    <div id="editorViewport" class="editor-viewport" aria-label="사진 스케치 영역 - 두 손가락으로 확대하거나 이동 모드를 선택하세요"><div id="editorStage" class="editor-stage"><canvas id="drawCanvas" aria-label="스케치 캔버스"></canvas><canvas id="editorTextCanvas" aria-hidden="true"></canvas></div><div class="editor-hint">글씨 이동: MOVE → 글씨를 눌러 끌기 / 손 이동: 사진 화면 이동</div></div>
     <div class="editor-actions">
       <button id="penBtn" class="active" onclick="tool('pen')">펜</button>
       <button id="arrowBtn" onclick="tool('arrow')">화살표</button>
-      <button id="textBtn" onclick="tool('text')">텍스트</button>
+      <button id="textBtn" onclick="tool('text')">텍스트 놓기</button>
+      <button id="moveBtn" onclick="tool('move')">MOVE · 글씨 이동</button>
       <button id="panBtn" onclick="tool('pan')">손 이동</button>
       <button onclick="zoomEditor(1.35)" aria-label="확대">＋ 확대</button>
       <button onclick="zoomEditor(1/1.35)" aria-label="축소">－ 축소</button>
@@ -109,11 +121,26 @@ function openPhoto(id){
       <span id="editorZoomText" class="editor-zoom">100%</span>
       <button onclick="undo()">↶ 취소</button>
     </div>
-    <div class="editor-text-tools"><textarea id="drawTextInput" rows="2" placeholder="사진에 넣을 글씨를 입력한 후, [텍스트]를 선택하고 사진의 위치를 터치하세요."></textarea>
-      <div class="row"><label>색상 <input id="penColor" type="color" value="#e43636" style="width:38px;height:32px"></label><label>굵기 <input id="penWidth" type="range" min="2" max="18" value="5" style="width:78px"></label><label>글자 크기 <select id="drawTextSize" style="width:auto;padding:7px"><option value="25">작게</option><option value="38" selected>보통</option><option value="55">크게</option><option value="76">아주 크게</option></select></label></div>
+    <div class="editor-text-tools">
+      <textarea id="drawTextInput" rows="2" placeholder="예: 천장 마감선 120mm 하향 · 사진을 터치해 글씨를 배치하세요"></textarea>
+      <div class="editor-text-options">
+        <label>글꼴 <select id="drawFont" onchange="editorApplySelectedText(true)">
+          <option value="gothic">고딕 (기본)</option><option value="myeongjo">명조</option><option value="rounded">둥근 고딕</option><option value="mono">고정폭</option>
+        </select></label>
+        <label>형태 <select id="drawWeight" onchange="editorApplySelectedText(true)"><option value="700">굵게</option><option value="400">보통</option></select></label>
+        <label>글자 크기 <select id="drawTextSize" onchange="editorApplySelectedText(true)"><option value="25">작게</option><option value="38" selected>보통</option><option value="55">크게</option><option value="76">아주 크게</option></select></label>
+        <label>색상 <input id="penColor" type="color" value="#e43636" onchange="editorApplySelectedText(true)" style="width:38px;height:32px"></label>
+        <label>펜 굵기 <input id="penWidth" type="range" min="2" max="18" value="5" style="width:78px"></label>
+      </div>
+      <div class="editor-text-actions">
+        <button type="button" onclick="editorPlaceTextCenter()">＋ 글씨 추가</button>
+        <button type="button" id="updateTextBtn" onclick="editorApplySelectedText(false)" disabled>선택 글씨 수정</button>
+        <button type="button" id="deleteTextBtn" onclick="editorRemoveText()" disabled>선택 글씨 삭제</button>
+      </div>
+      <div id="editorSelectedText" class="editor-text-selected">텍스트 입력 → [텍스트 놓기]로 사진을 터치하거나 [＋ 글씨 추가]를 누르세요. 추가 후 MOVE로 자유롭게 옮길 수 있습니다.</div>
     </div>
     <div class="editor-fields">
-      <p class="note">원본 사진은 변경하지 않습니다. 스케치 및 텍스트가 들어간 사진은 별도 이미지로 저장되어 현장 목록과 JSON 백업에 원본과 함께 남습니다.</p>
+      <p class="note">원본 사진은 변경하지 않습니다. 이번 버전에서 추가한 글씨는 저장 후에도 MOVE로 다시 이동하거나 글꼴을 수정할 수 있습니다. 이전 버전에서 이미 이미지에 합쳐진 글씨는 이동할 수 없습니다. 원본·스케치본과 수정 가능한 글씨 정보는 JSON 백업에 함께 들어갑니다.</p>
       <div class="form-col"><label>사진명</label><input id="photoLabel" value="${esc(p.label||'현장 사진')}"></div>
       <div class="form-col"><label>공종</label><select id="photoTrade">${trades.map(t=>`<option ${p.trade===t?'selected':''}>${t}</option>`).join('')}</select></div>
       <div class="form-col"><label>현장 메모</label><textarea id="photoMemo" placeholder="치수, 문제점, 요청사항">${esc(p.memo||'')}</textarea></div>
@@ -121,12 +148,18 @@ function openPhoto(id){
       <div class="row"><button class="btn" id="saveSketchBtn" onclick="saveMarked('${id}')">스케치·텍스트 저장</button><button class="btn-outline" onclick="downloadPhoto('${id}','original')">원본 내보내기</button><button class="btn-outline" onclick="downloadPhoto('${id}','sketch')">스케치본 내보내기</button><button class="btn-delete" onclick="removePhoto('${id}')">사진 삭제</button></div>
     </div>
   </div>`});
-  setupDraw(p.preview||p.original);
+  setupDraw(p.sketchBase||p.preview||p.original,Array.isArray(p.textLayers)?p.textLayers:[]);
   for(const field of ['photoLabel','photoTrade','photoMemo']){$('#'+field)?.addEventListener('input',()=>{if(drawState)drawState.dirty=true})}
 }
 function editorClamp(n,min,max){return Math.max(min,Math.min(max,n))}
 function editorPhotoPos(e,canvas){const r=canvas.getBoundingClientRect();return {x:(e.clientX-r.left)*canvas.width/r.width,y:(e.clientY-r.top)*canvas.height/r.height,inside:e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom}}
-function editorSnapshot(){if(!drawState)return;const h=drawState.history;h.push(drawState.canvas.toDataURL('image/jpeg',.94));if(h.length>12)h.shift();drawState.dirty=true}
+function editorCloneLayers(layers){return layers.map(o=>({...o}))}
+function editorSnapshot(baseChanged=true){
+  const s=drawState;if(!s)return;
+  const h=s.history;
+  h.push({base:baseChanged?s.canvas.toDataURL('image/jpeg',.94):h[h.length-1].base,layers:editorCloneLayers(s.textLayers)});
+  if(h.length>12)h.shift();s.dirty=true;
+}
 function editorTransform(){
   const s=drawState;if(!s)return;
   s.stage.style.transform=`translate(calc(-50% + ${s.panX}px), calc(-50% + ${s.panY}px)) scale(${s.zoom})`;
@@ -157,19 +190,90 @@ function drawArrow(c,a,b){
   c.moveTo(b.x-len*Math.cos(ang-.5),b.y-len*Math.sin(ang-.5));c.lineTo(b.x,b.y);
   c.lineTo(b.x-len*Math.cos(ang+.5),b.y-len*Math.sin(ang+.5));c.stroke();
 }
+// 시스템 글꼴만 사용하므로 외부 글꼴 파일·네트워크 연결이 필요하지 않습니다.
+const editorFontFamilies={
+  gothic:'-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif',
+  myeongjo:'"AppleMyungjo","Nanum Myeongjo","Batang",serif',
+  rounded:'"Arial Rounded MT Bold","Apple SD Gothic Neo","Malgun Gothic",sans-serif',
+  mono:'"SFMono-Regular","Menlo","D2Coding",monospace'
+};
+function editorFontString(t){return `${t.weight||700} ${t.size}px ${editorFontFamilies[t.font]||editorFontFamilies.gothic}`}
+function editorTextMetrics(ctx,t){
+  ctx.save();ctx.font=editorFontString(t);
+  const maxWidth=Math.max(t.size,Number(t.maxWidth)||drawState.canvas.width*.72);
+  const lines=pdfReportWrap(ctx,t.text||'',maxWidth).slice(0,16);
+  const width=Math.min(maxWidth,Math.max(t.size,...lines.map(x=>ctx.measureText(x||' ').width)));
+  ctx.restore();return {lines,width,height:Math.max(1,lines.length)*t.size*1.35};
+}
+function editorKeepTextInside(t){
+  const s=drawState;if(!s)return;
+  const m=editorTextMetrics(s.textCtx,t);
+  t.x=editorClamp(t.x,0,Math.max(0,s.canvas.width-m.width-4));
+  t.y=editorClamp(t.y,0,Math.max(0,s.canvas.height-m.height-4));
+}
+function editorDrawText(ctx,t){
+  if(!t.text)return;
+  const m=editorTextMetrics(ctx,t);
+  ctx.save();ctx.font=editorFontString(t);ctx.textBaseline='top';ctx.lineJoin='round';
+  ctx.lineWidth=Math.max(2,t.size/7);ctx.strokeStyle='rgba(255,255,255,.94)';ctx.fillStyle=t.color||'#e43636';
+  m.lines.forEach((line,i)=>{const y=t.y+i*t.size*1.35;ctx.strokeText(line,t.x,y);ctx.fillText(line,t.x,y)});
+  ctx.restore();
+}
+function editorRenderText(){
+  const s=drawState;if(!s?.textCtx)return;
+  const ctx=s.textCtx;ctx.clearRect(0,0,s.canvas.width,s.canvas.height);
+  for(const t of s.textLayers)editorDrawText(ctx,t);
+  const active=s.textLayers.find(t=>t.id===s.selectedTextId);
+  if(active){const m=editorTextMetrics(ctx,active),pad=Math.max(6,active.size*.13);
+    ctx.save();ctx.strokeStyle='#13a27a';ctx.lineWidth=Math.max(2,s.canvas.width/900);ctx.setLineDash([10,7]);
+    ctx.strokeRect(active.x-pad,active.y-pad,m.width+pad*2,m.height+pad*2);ctx.restore();
+  }
+  const info=$('#editorSelectedText');
+  if(info)info.textContent=active?'글씨 선택됨 · MOVE 상태에서 글씨를 끌어 위치를 변경하세요. 문구를 고친 뒤 [선택 글씨 수정]을 누를 수 있습니다.':'텍스트 입력 → 사진을 터치하거나 [＋ 글씨 추가]. 기존 글씨를 옮기려면 MOVE를 누르세요.';
+  for(const id of ['updateTextBtn','deleteTextBtn']){const b=$('#'+id);if(b)b.disabled=!active}
+}
+function editorTextHit(at){
+  const s=drawState;if(!s)return null;
+  for(let i=s.textLayers.length-1;i>=0;i--){const t=s.textLayers[i],m=editorTextMetrics(s.textCtx,t),pad=Math.max(10,t.size*.2);
+    if(at.x>=t.x-pad&&at.x<=t.x+m.width+pad&&at.y>=t.y-pad&&at.y<=t.y+m.height+pad)return t;
+  }
+  return null;
+}
+function editorSelectText(t){
+  const s=drawState;if(!s)return;
+  s.selectedTextId=t?.id||null;
+  if(t){$('#drawTextInput').value=t.text;$('#drawFont').value=t.font||'gothic';$('#drawWeight').value=String(t.weight||700);$('#drawTextSize').value=String(t.inputSize||38);$('#penColor').value=t.color||'#e43636'}
+  editorRenderText();
+}
+function editorTextFromInputs(at){
+  const s=drawState;
+  return {id:uid(),text:($('#drawTextInput')?.value||'').trim().slice(0,400),x:at.x,y:at.y,
+    font:$('#drawFont')?.value||'gothic',weight:Number($('#drawWeight')?.value||700),
+    inputSize:Number($('#drawTextSize')?.value||38),size:Number($('#drawTextSize')?.value||38)*s.canvas.width/1120,
+    color:$('#penColor')?.value||'#e43636',maxWidth:s.canvas.width*.72};
+}
 function editorPutText(at){
   const s=drawState;if(!s)return;
-  const value=$('#drawTextInput')?.value?.trim();
-  if(!value){toast('먼저 텍스트 입력 칸에 글씨를 작성해 주세요.');return}
-  const ctx=s.ctx,size=Number($('#drawTextSize')?.value||38)*s.canvas.width/1120;
-  ctx.save();ctx.font=`700 ${size}px ${pdfReportFont}`;ctx.textBaseline='top';ctx.lineJoin='round';ctx.lineWidth=Math.max(2,size/7);ctx.strokeStyle='rgba(255,255,255,.93)';ctx.fillStyle=$('#penColor')?.value||'#e43636';
-  let y=at.y;const margin=Math.max(4,size/4),width=s.canvas.width-at.x-margin;
-  const lines=pdfReportWrap(ctx,value,Math.max(size,width));
-  for(const text of lines.slice(0,12)){
-    if(y+size>s.canvas.height)break;
-    ctx.strokeText(text,at.x,y);ctx.fillText(text,at.x,y);y+=size*1.33;
-  }
-  ctx.restore();editorSnapshot();
+  const t=editorTextFromInputs(at);
+  if(!t.text){toast('사진에 넣을 글씨를 먼저 입력해 주세요.');return}
+  editorKeepTextInside(t);s.textLayers.push(t);s.selectedTextId=t.id;
+  editorSnapshot(false);tool('move');editorRenderText();
+  $('#drawTextInput')?.blur();s.viewport.closest('.editor-body')?.scrollTo({top:0,behavior:'smooth'});
+}
+function editorPlaceTextCenter(){const s=drawState;if(!s)return;editorPutText({x:s.canvas.width*.12,y:s.canvas.height*.23})}
+function editorApplySelectedText(styleOnly=false){
+  const s=drawState;if(!s)return;
+  const t=s.textLayers.find(o=>o.id===s.selectedTextId);if(!t)return;
+  const next=editorTextFromInputs({x:t.x,y:t.y});
+  if(!styleOnly&&!next.text){toast('수정할 글씨를 입력해 주세요.');return}
+  const keys=styleOnly?['font','weight','inputSize','size','color']:['text','font','weight','inputSize','size','color'];
+  if(keys.every(k=>t[k]===next[k]))return;
+  for(const k of keys)t[k]=next[k];editorKeepTextInside(t);editorSnapshot(false);editorRenderText();
+}
+function editorRemoveText(){
+  const s=drawState;if(!s?.selectedTextId)return;
+  s.textLayers=s.textLayers.filter(t=>t.id!==s.selectedTextId);s.selectedTextId=null;
+  editorSnapshot(false);editorRenderText();
 }
 function editorFinishStroke(e){
   const s=drawState;if(!s?.drawing)return;
@@ -179,15 +283,21 @@ function editorFinishStroke(e){
   }else if(s.mode==='pen'&&!s.strokeMoved){editorStrokeStyle(ctx);ctx.beginPath();ctx.arc(s.start.x,s.start.y,ctx.lineWidth/2,0,Math.PI*2);ctx.fill()}
   s.drawing=false;s.strokeBase=null;editorSnapshot();
 }
-function setupDraw(src){
-  const canvas=$('#drawCanvas'),viewport=$('#editorViewport'),stage=$('#editorStage');
+function setupDraw(src,initialTextLayers=[]){
+  const canvas=$('#drawCanvas'),textCanvas=$('#editorTextCanvas'),viewport=$('#editorViewport'),stage=$('#editorStage');
   const ctx=canvas.getContext('2d');const im=new Image();
   im.onerror=()=>toast('사진을 불러오지 못했습니다. 원본 사진을 확인하세요.');
   im.onload=()=>{
     const ratio=Math.min(1,2400/Math.max(im.width,im.height));
     canvas.width=Math.max(1,Math.round(im.width*ratio));canvas.height=Math.max(1,Math.round(im.height*ratio));
     ctx.drawImage(im,0,0,canvas.width,canvas.height);
-    drawState={canvas,ctx,viewport,stage,history:[canvas.toDataURL('image/jpeg',.94)],mode:'pen',dirty:false,zoom:1,panX:0,panY:0,pointers:new Map(),gesture:null,drawing:false,strokeMoved:false,start:null,strokeBase:null};
+    textCanvas.width=canvas.width;textCanvas.height=canvas.height;
+    const textCtx=textCanvas.getContext('2d');
+    const loadedLayers=editorCloneLayers(initialTextLayers).filter(o=>o&&typeof o.text==='string'&&Number.isFinite(o.x)&&Number.isFinite(o.y));
+    drawState={canvas,ctx,textCanvas,textCtx,textLayers:loadedLayers,selectedTextId:null,viewport,stage,
+      history:[{base:canvas.toDataURL('image/jpeg',.94),layers:editorCloneLayers(loadedLayers)}],mode:'pen',dirty:false,
+      zoom:1,panX:0,panY:0,pointers:new Map(),gesture:null,drawing:false,strokeMoved:false,start:null,strokeBase:null,textDrag:null};
+    editorRenderText();
     function fit(){if(!drawState||drawState.canvas!==canvas)return;const r=viewport.getBoundingClientRect(),scale=Math.min(r.width/canvas.width,r.height/canvas.height);stage.style.width=Math.round(canvas.width*scale)+'px';stage.style.height=Math.round(canvas.height*scale)+'px';editorTransform()}
     fit();const resize=new ResizeObserver(fit);resize.observe(viewport);
     drawState.cleanup=()=>resize.disconnect();
@@ -198,6 +308,7 @@ function setupDraw(src){
     e.preventDefault();try{viewport.setPointerCapture(e.pointerId)}catch(_){}
     s.pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
     if(s.pointers.size===2){
+      s.textDrag=null;
       if(s.drawing){const hadStroke=s.strokeMoved;if(s.mode==='arrow'&&s.strokeBase)ctx.putImageData(s.strokeBase,0,0);s.drawing=false;s.strokeBase=null;if(hadStroke&&s.mode==='pen')editorSnapshot()}
       const points=[...s.pointers.values()],mx=(points[0].x+points[1].x)/2,my=(points[0].y+points[1].y)/2,r=viewport.getBoundingClientRect();
       s.gesture={dist:Math.max(1,Math.hypot(points[0].x-points[1].x,points[0].y-points[1].y)),zoom:s.zoom,fx:(mx-r.left-r.width/2-s.panX)/s.zoom,fy:(my-r.top-r.height/2-s.panY)/s.zoom};
@@ -207,6 +318,10 @@ function setupDraw(src){
     s.down={x:e.clientX,y:e.clientY,panX:s.panX,panY:s.panY};
     const point=editorPhotoPos(e,canvas);s.start=point;
     if(!point.inside)return;
+    if(s.mode==='move'){
+      const hit=editorTextHit(point);editorSelectText(hit);
+      s.textDrag=hit?{id:hit.id,startX:hit.x,startY:hit.y,fromX:point.x,fromY:point.y,moved:false}:null;
+    }
     if(s.mode==='pen'||s.mode==='arrow'){
       s.drawing=true;s.strokeMoved=false;
       if(s.mode==='arrow')s.strokeBase=ctx.getImageData(0,0,canvas.width,canvas.height);
@@ -221,6 +336,13 @@ function setupDraw(src){
       s.zoom=z;s.panX=cx-r.left-r.width/2-s.gesture.fx*z;s.panY=cy-r.top-r.height/2-s.gesture.fy*z;editorTransform();return;
     }
     if(s.mode==='pan'&&s.down){s.panX=s.down.panX+e.clientX-s.down.x;s.panY=s.down.panY+e.clientY-s.down.y;editorTransform();return}
+    if(s.mode==='move'&&s.textDrag&&s.pointers.size===1){
+      const at=editorPhotoPos(e,canvas),t=s.textLayers.find(x=>x.id===s.textDrag.id);
+      if(!t)return;
+      const nx=s.textDrag.startX+at.x-s.textDrag.fromX,ny=s.textDrag.startY+at.y-s.textDrag.fromY;
+      if(Math.hypot(nx-t.x,ny-t.y)>1)s.textDrag.moved=true;
+      t.x=nx;t.y=ny;editorKeepTextInside(t);editorRenderText();return;
+    }
     if(!s.drawing)return;
     const at=editorPhotoPos(e,canvas);if(!Number.isFinite(at.x)||!Number.isFinite(at.y))return;
     if(s.mode==='pen'){editorStrokeStyle(ctx);ctx.lineTo(at.x,at.y);ctx.stroke()}else if(s.mode==='arrow'){ctx.putImageData(s.strokeBase,0,0);drawArrow(ctx,s.start,at)}
@@ -230,10 +352,11 @@ function setupDraw(src){
     const s=drawState;if(!s||!s.pointers.has(e.pointerId))return;
     e.preventDefault();const hadGesture=!!s.gesture;
     if(s.drawing&&!hadGesture)editorFinishStroke(e);
+    else if(s.mode==='move'&&!hadGesture&&s.textDrag?.moved)editorSnapshot(false);
     else if(s.mode==='text'&&!hadGesture&&s.pointers.size===1&&s.down&&Math.hypot(e.clientX-s.down.x,e.clientY-s.down.y)<10){
       const at=editorPhotoPos(e,canvas);if(at.inside)editorPutText(at);
     }
-    s.pointers.delete(e.pointerId);s.drawing=false;s.down=null;
+    s.pointers.delete(e.pointerId);s.drawing=false;s.down=null;s.textDrag=null;
     if(s.pointers.size<2)s.gesture=null;
   };
   viewport.addEventListener('pointerup',release);viewport.addEventListener('pointercancel',release);
@@ -241,21 +364,31 @@ function setupDraw(src){
 }
 function tool(x){
   const s=drawState;if(!s)return;s.mode=x;
-  for(const key of ['pen','arrow','text','pan']){const b=$('#'+key+'Btn');if(b)b.classList.toggle('active',x===key)}
-  s.viewport.classList.toggle('pan-active',x==='pan');
+  for(const key of ['pen','arrow','text','move','pan']){const b=$('#'+key+'Btn');if(b)b.classList.toggle('active',x===key)}
+  s.viewport.classList.toggle('pan-active',x==='pan');s.viewport.classList.toggle('move-active',x==='move');
   if(x==='text')$('#drawTextInput')?.focus();
 }
 function undo(){
   const s=drawState;if(!s||s.history.length<2)return;
-  s.history.pop();const im=new Image();s.drawing=false;
-  im.onload=()=>{if(drawState!==s)return;s.ctx.clearRect(0,0,s.canvas.width,s.canvas.height);s.ctx.drawImage(im,0,0,s.canvas.width,s.canvas.height);s.dirty=true};
-  im.src=s.history[s.history.length-1];
+  s.history.pop();const state=s.history[s.history.length-1],im=new Image();s.drawing=false;s.textDrag=null;
+  im.onload=()=>{if(drawState!==s)return;
+    s.ctx.clearRect(0,0,s.canvas.width,s.canvas.height);s.ctx.drawImage(im,0,0,s.canvas.width,s.canvas.height);
+    s.textLayers=editorCloneLayers(state.layers);s.selectedTextId=null;editorRenderText();s.dirty=true;
+  };
+  im.src=state.base;
 }
 async function saveMarked(id){
   const p=photos.find(x=>x.id===id),s=drawState;if(!p||!s)return;
   const button=$('#saveSketchBtn');if(button)button.disabled=true;
   try{
-    const updated={...p,preview:s.canvas.toDataURL('image/jpeg',.88),label:$('#photoLabel').value,trade:$('#photoTrade').value,memo:$('#photoMemo').value};
+    const composite=document.createElement('canvas');composite.width=s.canvas.width;composite.height=s.canvas.height;
+    const out=composite.getContext('2d');out.drawImage(s.canvas,0,0);
+    for(const layer of s.textLayers)editorDrawText(out,layer);
+    const updated={...p,preview:composite.toDataURL('image/jpeg',.88),
+      sketchBase:s.textLayers.length?s.canvas.toDataURL('image/jpeg',.90):null,
+      textLayers:editorCloneLayers(s.textLayers),
+      label:$('#photoLabel').value,trade:$('#photoTrade').value,memo:$('#photoMemo').value};
+    composite.width=1;composite.height=1;
     await put('photos',updated);s.dirty=false;s.cleanup?.();closeModal(true);
   }catch(e){if(button)button.disabled=false;toast('사진 저장 실패: '+e.message)}
 }
