@@ -1,19 +1,274 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#111c1b"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="현장노트"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon.png"><title>SITE NOTE | 현장노트</title><style>
 :root{--ink:#172523;--muted:#788380;--line:#e8eeea;--mint:#cce8da;--accent:#1c6c58;--bg:#f6f8f6;--card:white;--warn:#b56a17}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif}.shell{max-width:880px;margin:auto;padding:22px 16px 92px}.top{display:flex;justify-content:space-between;align-items:center;margin:6px 0 28px}.brand{font-size:12px;letter-spacing:3px;font-weight:800}.top small{color:var(--muted)}h1{font-size:30px;margin:0 0 9px;letter-spacing:-1px}h2{font-size:20px;letter-spacing:-.6px;margin:0}p{line-height:1.55}button,input,textarea,select{font:inherit}button{cursor:pointer;border:0}.btn{background:var(--ink);color:white;border-radius:13px;padding:12px 15px;font-weight:700}.btn-light{background:#ebf2ee;color:var(--ink);border-radius:13px;padding:12px 15px;font-weight:700}.btn-outline{background:white;border:1px solid var(--line);color:var(--ink);border-radius:13px;padding:11px 14px;font-weight:700}.small{font-size:12px}.muted{color:var(--muted)}.hero{display:flex;align-items:end;justify-content:space-between;gap:10px;margin-bottom:24px}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.metric{background:white;border:1px solid var(--line);padding:18px;border-radius:18px}.metric strong{display:block;font-size:25px;margin-top:10px}.section-title{display:flex;justify-content:space-between;align-items:center;margin:28px 0 15px}.project{background:white;border:1px solid var(--line);padding:18px;border-radius:18px;margin:10px 0;cursor:pointer}.project-top{display:flex;align-items:start;justify-content:space-between}.project h3{margin:0 0 8px;font-size:19px}.pill{display:inline-block;border-radius:99px;background:#eef4f0;color:#416456;font-size:12px;padding:5px 9px}.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.space{justify-content:space-between}.back{background:none;padding:6px 0;color:var(--accent);font-weight:750;margin-bottom:18px}.tabs{display:flex;gap:8px;overflow:auto;padding:3px 0 12px}.tab{flex:none;padding:10px 16px;background:#e8eeeb;border-radius:99px;color:#42534d}.tab.active{background:var(--ink);color:white}.empty{padding:30px 16px;border-radius:18px;border:1px dashed #cad9d0;color:var(--muted);text-align:center}.photo-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.photo-card{background:white;border-radius:16px;overflow:hidden;border:1px solid var(--line)}.photo-card img{width:100%;aspect-ratio:4/3;object-fit:cover;background:#e8ece8;display:block}.photo-info{padding:12px}.photo-info strong{display:block;font-size:14px}.photo-info small{color:var(--muted)}.form-col{display:grid;gap:7px;margin-bottom:15px}label{font-size:13px;font-weight:700}input:not([type=file]),textarea,select{width:100%;border:1px solid #dce4de;background:white;border-radius:12px;padding:13px;color:var(--ink)}textarea{min-height:90px;resize:vertical}.modal-bg{position:fixed;inset:0;background:#1423219c;z-index:20;display:flex;justify-content:center;align-items:end}.modal{background:#fff;max-height:94dvh;overflow:auto;width:min(100%,720px);padding:22px;border-radius:22px 22px 0 0}.modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}.close{border-radius:50%;background:#f0f3f0;width:36px;height:36px}.hidden{display:none!important}.footer{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);padding:10px 15px calc(12px + env(safe-area-inset-bottom));display:flex;justify-content:space-around;z-index:5}.nav{background:none;color:#73817a;font-size:12px;display:grid;gap:4px;place-items:center;min-width:65px}.nav span{font-size:23px}.nav.active{color:var(--accent);font-weight:800}.camera-view{position:relative;background:#101615;border-radius:15px;overflow:hidden}.camera-view video{display:block;width:100%;max-height:48vh;object-fit:cover}.draw{width:100%;touch-action:none;display:block;border-radius:12px;background:#edf0ed;max-height:58vh;object-fit:contain}.tools{display:flex;gap:8px;align-items:center;margin:12px 0;flex-wrap:wrap}.tools button{padding:9px 12px;border-radius:10px;background:#f0f4f0}.tools button.active{background:#cce8da}.note{font-size:12px;color:var(--muted);line-height:1.6}.item{padding:14px;border-radius:15px;background:white;border:1px solid var(--line);margin-bottom:10px}.report-photo{width:100%;max-width:250px;border-radius:8px}.status-requested{background:#fff3e3;color:#98600d}.status-progress{background:#e7f0fc;color:#28679c}.status-done{background:#def2e8;color:#1a7753}.danger{color:#b83e35}.btn-delete{background:#fff3f2;color:#a53630;border:1px solid #f0c7c3;border-radius:12px;padding:10px 12px;font-weight:700}.btn-delete:disabled{opacity:.4;cursor:not-allowed}.audio{width:100%;margin:8px 0}.bar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:15px 0}.noprint{}@media(min-width:700px){.photo-grid{grid-template-columns:repeat(3,1fr)}.modal-bg{align-items:center}.modal{border-radius:22px}.grid{grid-template-columns:repeat(4,1fr)}}@media print{body{background:white}.top,.footer,.noprint,.back,.tabs,.btn,.btn-light,.btn-outline{display:none!important}.shell{max-width:none;padding:0}#report-print{display:block!important}.report-page{break-inside:avoid;margin-bottom:22px}.report-photo{max-width:180px}}
+/* 사진 스케치 편집기 - iPhone 화면 전체 사용, 확대 상태에서 원본 픽셀에 그리기 */
+#overlay.editor-mode{align-items:stretch;padding:0}
+#overlay.editor-mode .modal{max-width:none;width:100%;height:100dvh;max-height:100dvh;border-radius:0;padding:10px 12px calc(12px + env(safe-area-inset-bottom));display:flex;flex-direction:column;overflow:hidden}
+#overlay.editor-mode .modal-head{flex:0 0 auto;margin-bottom:7px}
+#overlay.editor-mode .modal-head h2{font-size:18px}
+#overlay.editor-mode .close{flex:none}
+.editor-body{min-height:0;flex:1;overflow-y:auto;overscroll-behavior:contain;display:flex;flex-direction:column}
+.editor-viewport{flex:0 0 auto;position:relative;overflow:hidden;background:#18211f;border-radius:13px;height:clamp(340px,62dvh,750px);touch-action:none;user-select:none;-webkit-user-select:none;cursor:crosshair}
+.editor-viewport.pan-active{cursor:grab}
+.editor-stage{position:absolute;left:50%;top:50%;transform-origin:center center;will-change:transform}
+.editor-stage canvas{display:block;width:100%;height:100%;touch-action:none;-webkit-user-select:none}
+.editor-hint{position:absolute;left:10px;bottom:10px;background:#10251fc7;color:#fff;font-size:11px;padding:7px 9px;border-radius:8px;pointer-events:none}
+.editor-actions{display:flex;gap:6px;flex-wrap:wrap;align-items:center;padding:10px 0 5px}
+.editor-actions button{border-radius:9px;padding:9px 11px;background:#eff3f0;font-size:12px;font-weight:700;color:#21332c}
+.editor-actions button.active{background:#c5e9da;color:#13533c;box-shadow:inset 0 0 0 2px #6ea88f}
+.editor-zoom{font-size:12px;color:var(--muted);min-width:44px;text-align:center}
+.editor-text-tools{padding:10px;background:#eff5f0;border-radius:12px;margin-bottom:9px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:7px;align-items:center}
+.editor-text-tools textarea{min-height:40px;max-height:72px;padding:8px;font-size:14px}
+.editor-text-tools label{display:flex;align-items:center;gap:5px;font-size:12px}
+.editor-fields{padding:4px 0 12px}
+.editor-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:10px 0 14px}
+.editor-pair img{width:100%;aspect-ratio:4/3;object-fit:contain;background:#f0f2ef;border-radius:10px}
+.editor-pair figcaption{font-size:12px;text-align:center;color:var(--muted);margin-top:4px}
+.photo-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px;padding:7px;background:#f3f6f4}
+.photo-pair figure{margin:0;min-width:0}
+.photo-pair img{display:block;width:100%;aspect-ratio:4/3;object-fit:contain;background:#e6eeea;border-radius:8px}
+.photo-pair figcaption{text-align:center;margin-top:5px;font-size:11px;font-weight:700;color:#527061}
+.photo-card .single-photo{width:100%;aspect-ratio:4/3;object-fit:cover;background:#e8ece8;display:block}
+@media(max-width:550px){.editor-viewport{height:66dvh;min-height:300px}.editor-actions button{padding:9px;font-size:11px}.editor-text-tools{grid-template-columns:1fr}}
 </style></head><body><main class="shell"><header class="top"><div class="brand">SITE NOTE <span style="color:#6d9e86">/ FIELD</span></div><small id="today"></small></header><div id="app"></div></main><nav class="footer"><button class="nav active" data-nav="home"><span>▦</span>프로젝트</button><button class="nav" data-nav="tasks"><span>☑</span>보수 관리</button><button class="nav" data-nav="backup"><span>▣</span>백업·설정</button></nav><div id="overlay" class="modal-bg hidden"><div class="modal" id="modal"></div></div><input type="file" id="importPhoto" accept="image/*" style="display:none"><input type="file" id="importBackup" accept="application/json,text/plain,.json,.txt" style="display:none"><div id="report-print" style="display:none"></div><script>
 'use strict';const $=s=>document.querySelector(s), app=$('#app'), overlay=$('#overlay'), modal=$('#modal');let db,view='home',projectId=null,tab='photos',cameraStream=null,recorder=null,recordChunks=[],drawState=null;let projects=[],photos=[],notes=[],tasks=[],audios=[];const uid=()=>crypto.randomUUID?.()||'id'+Date.now()+Math.random().toString(16).slice(2);const date=()=>{const d=new Date(),pad=n=>String(n).padStart(2,'0');return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`};const fmt=t=>new Date(t).toLocaleString('ko-KR');const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));function toast(s){alert(s)}
-const schema=['projects','photos','notes','tasks','audios'];function openDB(){return new Promise((ok,no)=>{let r=indexedDB.open('site-note-db',1);r.onupgradeneeded=()=>schema.forEach(n=>{if(!r.result.objectStoreNames.contains(n))r.result.createObjectStore(n,{keyPath:'id'})});r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error)})}function tx(name,mode='readonly'){return db.transaction(name,mode).objectStore(name)}function request(r){return new Promise((ok,no)=>{r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error)})}async function getAll(n){return request(tx(n).getAll())}async function put(n,o){await request(tx(n,'readwrite').put(o));await refresh()}async function del(n,id){await request(tx(n,'readwrite').delete(id));await refresh()}async function refresh(){[projects,photos,notes,tasks,audios]=await Promise.all(schema.map(getAll));render()}
-function showModal(html){modal.innerHTML=`<div class="modal-head"><h2>${html.title}</h2><button class="close" onclick="closeModal()">✕</button></div>${html.body}`;overlay.classList.remove('hidden')}function closeModal(){overlay.classList.add('hidden');if(cameraStream){cameraStream.getTracks().forEach(t=>t.stop());cameraStream=null}drawState=null}overlay.addEventListener('click',e=>{if(e.target===overlay)closeModal()});$('#today').textContent=new Date().toLocaleDateString('ko-KR',{year:'numeric',month:'short',day:'numeric'});
+const schema=['projects','photos','notes','tasks','audios'];function openDB(){return new Promise((ok,no)=>{let r=indexedDB.open('site-note-db',1);r.onupgradeneeded=()=>schema.forEach(n=>{if(!r.result.objectStoreNames.contains(n))r.result.createObjectStore(n,{keyPath:'id'})});r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error)})}function tx(name,mode='readonly'){return db.transaction(name,mode).objectStore(name)}function request(r){return new Promise((ok,no)=>{r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error)})}async function getAll(n){return request(tx(n).getAll())}async function put(n,o){await request(tx(n,'readwrite').put(o));markBackupDataChanged();await refresh()}async function del(n,id){await request(tx(n,'readwrite').delete(id));markBackupDataChanged();await refresh()}async function refresh(){[projects,photos,notes,tasks,audios]=await Promise.all(schema.map(getAll));render()}
+
+// 백업 알림은 이 실행 환경의 저장소에만 기록됩니다. iCloud 저장 성공 여부는 파일 앱에서 사용자가 직접 확인해야 합니다.
+const backupInfoKey='site-note-backup-info-v1',backupReminderDays=7;
+function readBackupInfo(){
+  try{const item=JSON.parse(localStorage.getItem(backupInfoKey)||'{}');return item&&typeof item==='object'?item:{}}
+  catch(e){return {}}
+}
+function writeBackupInfo(info){try{localStorage.setItem(backupInfoKey,JSON.stringify(info))}catch(e){}}
+function markBackupDataChanged(){const info=readBackupInfo();info.changedAt=Date.now();writeBackupInfo(info)}
+function markBackupFilePrepared(){
+  const info=readBackupInfo();info.exportedAt=Date.now();info.exportedChangeAt=info.changedAt||0;
+  writeBackupInfo(info);updateBackupReminder();
+}
+function backupReminderState(){
+  const info=readBackupInfo(),hasData=projects.length+photos.length+notes.length+tasks.length+audios.length>0;
+  const last=Number(info.confirmedExportAt)||0;
+  const changed=last>0&&(Number(info.changedAt)||0)>(Number(info.confirmedChangeAt)||0);
+  const due=last>0&&Date.now()-last>=backupReminderDays*24*60*60*1000;
+  let status='백업할 기록 없음',description='현장을 등록하면 백업 상태를 안내합니다.',urgent=false;
+  if(hasData&&!last){status='첫 JSON 백업이 필요합니다';description='현장 기록이 있습니다. iCloud Drive에 복구용 JSON 파일을 보관해 주세요.';urgent=true}
+  else if(hasData&&changed){status='변경된 기록의 백업이 필요합니다';description='마지막 확인 이후 현장 기록이 추가·수정·삭제되었습니다.';urgent=true}
+  else if(hasData&&due){status='7일이 지나 백업을 권장합니다';description='마지막 백업을 확인한 후 7일 이상 지났습니다.';urgent=true}
+  else if(last){status='최근 백업 확인 완료';description='이 앱에서 확인한 백업 이후 기록 변경이 감지되지 않았습니다.'}
+  return {info,last,status,description,urgent};
+}
+function backupReminderInner(home=false){
+  const {info,last,status,description,urgent}=backupReminderState();
+  const stamp=last?fmt(last):'확인 기록 없음';
+  const pending=Number(info.exportedAt)>Number(info.confirmedExportAt||0);
+  const background=urgent?'#fff8ed':'#edf5ef',edge=urgent?'#ecd1a8':'#d8e9df';
+  return `<div style="border:1px solid ${edge};background:${background};border-radius:15px;padding:16px;margin:15px 0">
+    <div class="row space"><strong>${urgent?'● ': '✓ '}${status}</strong><small class="muted">7일 주기 안내</small></div>
+    <p class="small" style="margin:9px 0">${description}</p>
+    <div class="small muted">마지막 확인된 JSON 백업: <strong>${esc(stamp)}</strong></div>
+    ${home?`<button class="btn-light small" style="margin-top:12px" onclick="go('backup')">JSON 백업하러 가기</button>`:
+    `<p class="note" style="margin-top:11px">다운로드하거나 공유한 것만으로 백업 완료로 처리하지 않습니다. 파일 앱에서 실제 파일을 확인한 뒤 아래 버튼을 눌러 주세요.</p>
+     <button class="btn-light small" onclick="confirmBackupSaved()" ${pending?'':'disabled'} style="margin-top:4px;${pending?'':'opacity:.45'}">파일 앱에서 저장 확인했어요 · 백업 완료 기록</button>`}
+  </div>`;
+}
+function updateBackupReminder(){const area=document.getElementById('backupReminder');if(area)area.innerHTML=backupReminderInner(view==='home')}
+function confirmBackupSaved(){
+  const info=readBackupInfo();
+  if(!info.exportedAt||info.exportedAt<=Number(info.confirmedExportAt||0)){
+    toast('먼저 JSON 파일 다운로드 또는 공유를 실행하고 파일 앱에서 확인해 주세요.');return;
+  }
+  if(!confirm('파일 앱 → iCloud Drive → 현장노트 폴더에서 방금 만든 JSON(.json 또는 .txt) 파일을 실제로 확인하셨나요?'))return;
+  info.confirmedExportAt=info.exportedAt;
+  info.confirmedChangeAt=info.exportedChangeAt||0;
+  writeBackupInfo(info);updateBackupReminder();
+  toast('마지막 백업 확인 날짜를 기록했습니다. 이 기기에서만 표시되며, 백업 파일이 자동 동기화되는 것은 아닙니다.');
+}
+
+function showModal(html){overlay.classList.toggle('editor-mode',!!html.editor);modal.innerHTML=`<div class="modal-head"><h2>${html.title}</h2><button class="close" onclick="closeModal()">✕</button></div>${html.body}`;overlay.classList.remove('hidden')}function closeModal(force=false){if(!force&&drawState?.dirty&&!confirm('저장하지 않은 스케치가 있습니다. 저장하지 않고 닫으시겠습니까?'))return;overlay.classList.add('hidden');overlay.classList.remove('editor-mode');drawState?.cleanup?.();if(cameraStream){cameraStream.getTracks().forEach(t=>t.stop());cameraStream=null}drawState=null}overlay.addEventListener('click',e=>{if(e.target===overlay)closeModal()});$('#today').textContent=new Date().toLocaleDateString('ko-KR',{year:'numeric',month:'short',day:'numeric'});
 function go(v){view=v;projectId=null;render()}function openProject(id){projectId=id;view='project';tab='photos';render()}function nav(){document.querySelectorAll('.nav').forEach(n=>n.classList.toggle('active',n.dataset.nav===view||(view==='project'&&n.dataset.nav==='home')))}function render(){nav();if(view==='home')return home();if(view==='project')return project();if(view==='tasks')return taskPage();if(view==='backup')return backupPage()}
-function home(){let active=tasks.filter(t=>t.status!=='완료').length;app.innerHTML=`<div class="hero"><div><div class="muted small">현장의 모든 기록을 한곳에</div><h1>나의 현장</h1><div class="muted small">사진 · 스케치 · 작업일지 · 보수관리</div></div><button class="btn" onclick="newProject()">+ 현장 추가</button></div><div class="grid"><div class="metric"><span class="muted small">전체 현장</span><strong>${projects.length}</strong></div><div class="metric"><span class="muted small">보관 사진</span><strong>${photos.length}</strong></div><div class="metric"><span class="muted small">미완료 보수</span><strong>${active}</strong></div><div class="metric"><span class="muted small">현장 기록</span><strong>${notes.length}</strong></div></div><div class="section-title"><h2>프로젝트</h2><span class="muted small">최근 생성 순</span></div>${projects.length?projects.slice().sort((a,b)=>b.created-a.created).map(p=>`<div class="project" onclick="openProject('${p.id}')"><div class="project-top"><h3>${esc(p.name)}</h3><div class="row"><span class="pill">${esc(p.status||'진행중')}</span><button class="btn-delete small" aria-label="${esc(p.name)} 삭제" onclick="event.stopPropagation();deleteProjectPrompt('${p.id}')">삭제</button></div></div><p class="muted small">${esc(p.address||'주소 미입력')} · ${esc(p.period||'공사기간 미입력')}</p><div class="row small muted"><span>사진 ${photos.filter(x=>x.projectId===p.id).length}장</span><span>·</span><span>기록 ${notes.filter(x=>x.projectId===p.id).length}건</span><span>·</span><span>보수 ${tasks.filter(x=>x.projectId===p.id&&x.status!=='완료').length}건</span></div></div>`).join(''):`<div class="empty">아직 등록된 현장이 없습니다.<p>첫 번째 프로젝트를 등록해 주세요.</p><button class="btn" onclick="newProject()">+ 첫 현장 만들기</button></div>`}`}
+function home(){let active=tasks.filter(t=>t.status!=='완료').length;app.innerHTML=`<div class="hero"><div><div class="muted small">현장의 모든 기록을 한곳에</div><h1>나의 현장</h1><div class="muted small">사진 · 스케치 · 작업일지 · 보수관리</div></div><button class="btn" onclick="newProject()">+ 현장 추가</button></div><div class="grid"><div class="metric"><span class="muted small">전체 현장</span><strong>${projects.length}</strong></div><div class="metric"><span class="muted small">보관 사진</span><strong>${photos.length}</strong></div><div class="metric"><span class="muted small">미완료 보수</span><strong>${active}</strong></div><div class="metric"><span class="muted small">현장 기록</span><strong>${notes.length}</strong></div></div><div id="backupReminder">${backupReminderInner(true)}</div><div class="section-title"><h2>프로젝트</h2><span class="muted small">최근 생성 순</span></div>${projects.length?projects.slice().sort((a,b)=>b.created-a.created).map(p=>`<div class="project" onclick="openProject('${p.id}')"><div class="project-top"><h3>${esc(p.name)}</h3><div class="row"><span class="pill">${esc(p.status||'진행중')}</span><button class="btn-delete small" aria-label="${esc(p.name)} 삭제" onclick="event.stopPropagation();deleteProjectPrompt('${p.id}')">삭제</button></div></div><p class="muted small">${esc(p.address||'주소 미입력')} · ${esc(p.period||'공사기간 미입력')}</p><div class="row small muted"><span>사진 ${photos.filter(x=>x.projectId===p.id).length}장</span><span>·</span><span>기록 ${notes.filter(x=>x.projectId===p.id).length}건</span><span>·</span><span>보수 ${tasks.filter(x=>x.projectId===p.id&&x.status!=='완료').length}건</span></div></div>`).join(''):`<div class="empty">아직 등록된 현장이 없습니다.<p>첫 번째 프로젝트를 등록해 주세요.</p><button class="btn" onclick="newProject()">+ 첫 현장 만들기</button></div>`}`}
 function newProject(){showModal({title:'새 프로젝트',body:`<form id="projectForm"><div class="form-col"><label>현장명 *</label><input name="name" maxlength="80" required placeholder="예: 상무동 카페 리뉴얼"></div><div class="form-col"><label>현장 주소</label><input name="address" placeholder="예: 광주 서구 ..."></div><div class="form-col"><label>공사기간</label><input name="period" placeholder="예: 2026.11.20 ~ 2026.12.20"></div><div class="form-col"><label>담당자</label><input name="manager" placeholder="이름 또는 팀"></div><button class="btn" style="width:100%">프로젝트 저장</button></form>`});$('#projectForm').onsubmit=async e=>{e.preventDefault();const f=new FormData(e.currentTarget),id=uid();await put('projects',{id,name:f.get('name').trim(),address:f.get('address').trim(),period:f.get('period').trim(),manager:f.get('manager').trim(),status:'진행중',created:Date.now()});closeModal();openProject(id)}}
 function deleteProjectPrompt(id){const p=projects.find(x=>x.id===id);if(!p)return;const cp=photos.filter(x=>x.projectId===id).length,cn=notes.filter(x=>x.projectId===id).length,ct=tasks.filter(x=>x.projectId===id).length,ca=audios.filter(x=>x.projectId===id).length;showModal({title:'프로젝트 삭제',body:`<div class="item" style="background:#fff8f6;border-color:#f0c7c3"><strong>${esc(p.name)}</strong><p class="danger">삭제하면 이 프로젝트의 사진 ${cp}장, 작업일지 ${cn}건, 보수 기록 ${ct}건, 음성 ${ca}건도 함께 삭제되며 되돌릴 수 없습니다.</p><p class="note">삭제 전 최신 백업 파일이 iCloud Drive에 저장되어 있는지 확인해 주세요. 삭제해도 기존 iCloud 백업 파일은 자동으로 바뀌거나 삭제되지 않습니다.</p></div><div class="form-col"><label for="confirmDeleteName">실수로 삭제하지 않도록 프로젝트명 그대로 입력하세요.</label><input id="confirmDeleteName" autocomplete="off" placeholder="${esc(p.name)}"></div><div class="row"><button class="btn-delete" id="confirmProjectDelete" disabled>프로젝트와 관련 기록 삭제</button><button class="btn-outline" onclick="closeModal()">취소</button></div>`});const input=$('#confirmDeleteName'),button=$('#confirmProjectDelete');input.addEventListener('input',()=>button.disabled=input.value.trim()!==p.name);button.onclick=async()=>{button.disabled=true;button.textContent='삭제 중...';try{await deleteProjectAndContents(id);closeModal();projectId=null;view='home';await refresh();toast('프로젝트와 관련 기록을 삭제했습니다.')}catch(e){button.textContent='프로젝트와 관련 기록 삭제';button.disabled=false;toast('삭제 실패: '+e.message)}}}
-function deleteProjectAndContents(id){return new Promise((resolve,reject)=>{let transaction;try{transaction=db.transaction(schema,'readwrite');for(const name of schema){const store=transaction.objectStore(name);if(name==='projects'){store.delete(id)}else{const entries=({photos,notes,tasks,audios})[name].filter(item=>item.projectId===id);for(const entry of entries)store.delete(entry.id)}}transaction.oncomplete=()=>resolve();transaction.onerror=()=>reject(transaction.error||new Error('저장소 오류'));transaction.onabort=()=>reject(transaction.error||new Error('작업 취소'))}catch(e){if(transaction)try{transaction.abort()}catch(_){}reject(e)}})}
-function project(){let p=projects.find(x=>x.id===projectId);if(!p){go('home');return}let ps=photos.filter(x=>x.projectId===projectId).sort((a,b)=>b.created-a.created),ns=notes.filter(x=>x.projectId===projectId).sort((a,b)=>b.created-a.created),ts=tasks.filter(x=>x.projectId===projectId).sort((a,b)=>b.created-a.created),as=audios.filter(x=>x.projectId===projectId).sort((a,b)=>b.created-a.created);app.innerHTML=`<button class="back" onclick="go('home')">← 전체 프로젝트</button><div class="hero"><div><div class="muted small">PROJECT / ${new Date(p.created).getFullYear()}</div><h1>${esc(p.name)}</h1><div class="muted small">${esc(p.address||'주소 미입력')} ${p.manager?'· 담당 '+esc(p.manager):''}</div></div><div class="row"><button class="btn-outline" onclick="createDirectPdf('${p.id}')">PDF 파일 만들기</button><button class="btn-delete" onclick="deleteProjectPrompt('${p.id}')">프로젝트 삭제</button></div></div><div class="row" style="margin-bottom:18px"><button class="btn" onclick="launchCamera()">📷 사진 촬영</button><button class="btn-light" onclick="$('#importPhoto').click()">사진 가져오기</button></div><div class="tabs"><button class="tab ${tab==='photos'?'active':''}" onclick="setTab('photos')">사진 ${ps.length}</button><button class="tab ${tab==='notes'?'active':''}" onclick="setTab('notes')">작업일지 ${ns.length}</button><button class="tab ${tab==='tasks'?'active':''}" onclick="setTab('tasks')">보수 ${ts.length}</button><button class="tab ${tab==='audio'?'active':''}" onclick="setTab('audio')">음성 ${as.length}</button></div><div id="contents"></div>`;let box=$('#contents');if(tab==='photos')box.innerHTML=ps.length?`<div class="photo-grid">${ps.map(o=>`<div class="photo-card"><img alt="현장 사진" src="${o.preview||o.original}" onclick="openPhoto('${o.id}')"><div class="photo-info"><strong>${esc(o.label||'현장 사진')}</strong><small>${fmt(o.created)} · ${esc(o.trade||'미분류')}</small><div class="row" style="margin-top:10px"><button class="btn-light small" onclick="openPhoto('${o.id}')">스케치·기록</button></div></div></div>`).join('')}</div>`:`<div class="empty">사진이 없습니다.<p>앱 카메라로 촬영하면 기본 사진 앨범 저장 없이 앱에 보관합니다.</p></div>`;if(tab==='notes')box.innerHTML=`<div class="bar"><span class="muted small">날짜별 작업 내용</span><button class="btn" onclick="newNote()">+ 작업일지</button></div>${ns.length?ns.map(n=>`<div class="item"><strong>${esc(n.title)}</strong><span class="pill" style="margin-left:8px">${esc(n.trade)}</span><p>${esc(n.content).replace(/\n/g,'<br>')}</p><div class="row space"><small class="muted">${fmt(n.created)}</small><button class="btn-outline small danger" onclick="removeItem('notes','${n.id}')">삭제</button></div></div>`).join(''):'<div class="empty">아직 작성한 작업일지가 없습니다.</div>'}`;if(tab==='tasks')box.innerHTML=`<div class="bar"><span class="muted small">수정 요청·진행·완료 이력</span><button class="btn" onclick="newTask()">+ 보수 요청</button></div>${ts.length?ts.map(taskHTML).join(''):'<div class="empty">등록된 보수 요청이 없습니다.</div>'}`;if(tab==='audio')box.innerHTML=`<div class="bar"><span class="muted small">녹음 파일은 앱 안에 저장됩니다.</span><button class="btn" onclick="newAudio()">+ 음성 기록</button></div>${as.length?as.map(audioHTML).join(''):'<div class="empty">등록된 음성 메모가 없습니다.</div>'}`}
+function deleteProjectAndContents(id){return new Promise((resolve,reject)=>{let transaction;try{transaction=db.transaction(schema,'readwrite');for(const name of schema){const store=transaction.objectStore(name);if(name==='projects'){store.delete(id)}else{const entries=({photos,notes,tasks,audios})[name].filter(item=>item.projectId===id);for(const entry of entries)store.delete(entry.id)}}transaction.oncomplete=()=>{markBackupDataChanged();resolve()};transaction.onerror=()=>reject(transaction.error||new Error('저장소 오류'));transaction.onabort=()=>reject(transaction.error||new Error('작업 취소'))}catch(e){if(transaction)try{transaction.abort()}catch(_){}reject(e)}})}
+function project(){let p=projects.find(x=>x.id===projectId);if(!p){go('home');return}let ps=photos.filter(x=>x.projectId===projectId).sort((a,b)=>b.created-a.created),ns=notes.filter(x=>x.projectId===projectId).sort((a,b)=>b.created-a.created),ts=tasks.filter(x=>x.projectId===projectId).sort((a,b)=>b.created-a.created),as=audios.filter(x=>x.projectId===projectId).sort((a,b)=>b.created-a.created);app.innerHTML=`<button class="back" onclick="go('home')">← 전체 프로젝트</button><div class="hero"><div><div class="muted small">PROJECT / ${new Date(p.created).getFullYear()}</div><h1>${esc(p.name)}</h1><div class="muted small">${esc(p.address||'주소 미입력')} ${p.manager?'· 담당 '+esc(p.manager):''}</div></div><div class="row"><button class="btn-outline" onclick="createDirectPdf('${p.id}')">PDF 파일 만들기</button><button class="btn-delete" onclick="deleteProjectPrompt('${p.id}')">프로젝트 삭제</button></div></div><div class="row" style="margin-bottom:18px"><button class="btn" onclick="launchCamera()">📷 사진 촬영</button><button class="btn-light" onclick="$('#importPhoto').click()">사진 가져오기</button></div><div class="tabs"><button class="tab ${tab==='photos'?'active':''}" onclick="setTab('photos')">사진 ${ps.length}</button><button class="tab ${tab==='notes'?'active':''}" onclick="setTab('notes')">작업일지 ${ns.length}</button><button class="tab ${tab==='tasks'?'active':''}" onclick="setTab('tasks')">보수 ${ts.length}</button><button class="tab ${tab==='audio'?'active':''}" onclick="setTab('audio')">음성 ${as.length}</button></div><div id="contents"></div>`;let box=$('#contents');if(tab==='photos')box.innerHTML=ps.length?`<div class="photo-grid">${ps.map(o=>`<div class="photo-card">${o.preview?`<div class="photo-pair"><figure><img alt="원본 사진" src="${o.original}" onclick="openPhoto('${o.id}')"><figcaption>원본</figcaption></figure><figure><img alt="스케치 사진" src="${o.preview}" onclick="openPhoto('${o.id}')"><figcaption>스케치본</figcaption></figure></div>`:`<img class="single-photo" alt="원본 사진" src="${o.original}" onclick="openPhoto('${o.id}')">`}<div class="photo-info"><strong>${esc(o.label||'현장 사진')}</strong><small>${fmt(o.created)} · ${esc(o.trade||'미분류')}</small><div class="row" style="margin-top:10px"><button class="btn-light small" onclick="openPhoto('${o.id}')">확대·스케치·텍스트</button></div></div></div>`).join('')}</div>`:`<div class="empty">사진이 없습니다.<p>앱 카메라로 촬영하면 기본 사진 앨범 저장 없이 앱에 보관합니다.</p></div>`;if(tab==='notes')box.innerHTML=`<div class="bar"><span class="muted small">날짜별 작업 내용</span><button class="btn" onclick="newNote()">+ 작업일지</button></div>${ns.length?ns.map(n=>`<div class="item"><strong>${esc(n.title)}</strong><span class="pill" style="margin-left:8px">${esc(n.trade)}</span><p>${esc(n.content).replace(/\n/g,'<br>')}</p><div class="row space"><small class="muted">${fmt(n.created)}</small><button class="btn-outline small danger" onclick="removeItem('notes','${n.id}')">삭제</button></div></div>`).join(''):'<div class="empty">아직 작성한 작업일지가 없습니다.</div>'}`;if(tab==='tasks')box.innerHTML=`<div class="bar"><span class="muted small">수정 요청·진행·완료 이력</span><button class="btn" onclick="newTask()">+ 보수 요청</button></div>${ts.length?ts.map(taskHTML).join(''):'<div class="empty">등록된 보수 요청이 없습니다.</div>'}`;if(tab==='audio')box.innerHTML=`<div class="bar"><span class="muted small">녹음 파일은 앱 안에 저장됩니다.</span><button class="btn" onclick="newAudio()">+ 음성 기록</button></div>${as.length?as.map(audioHTML).join(''):'<div class="empty">등록된 음성 메모가 없습니다.</div>'}`}
 function setTab(t){tab=t;render()}async function launchCamera(){showModal({title:'현장 사진 촬영',body:`<div class="camera-view"><video id="camera" autoplay playsinline muted></video></div><div class="row" style="margin-top:15px"><button class="btn" id="snap">촬영·앱에 저장</button><button class="btn-outline" onclick="closeModal()">취소</button></div><p class="note">HTTPS 환경과 카메라 권한이 필요합니다. 사진 앱으로 자동 내보내지 않습니다.</p>`});try{cameraStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false});$('#camera').srcObject=cameraStream;$('#snap').onclick=async()=>{const v=$('#camera'),c=document.createElement('canvas');c.width=v.videoWidth;c.height=v.videoHeight;if(!c.width)return toast('카메라 준비 중입니다.');c.getContext('2d').drawImage(v,0,0);let data=c.toDataURL('image/jpeg',.82);await savePhoto(data);closeModal()}}catch(e){modal.querySelector('.camera-view').innerHTML='<p style="color:white;padding:20px">카메라 권한이 없거나 지원되지 않습니다.</p>';$('#snap').disabled=true}}
 async function savePhoto(data){await put('photos',{id:uid(),projectId,original:data,preview:null,label:'현장 사진',trade:'미분류',memo:'',created:Date.now()});tab='photos';render()}$('#importPhoto').onchange=async e=>{let f=e.target.files[0];if(!f||!projectId)return;const r=new FileReader();r.onload=async()=>{await savePhoto(r.result);e.target.value=''};r.readAsDataURL(f)};
-function openPhoto(id){let p=photos.find(x=>x.id===id);if(!p)return;showModal({title:'사진 스케치·시공 기록',body:`<canvas id="drawCanvas" class="draw"></canvas><div class="tools"><button id="penBtn" class="active" onclick="tool('pen')">펜</button><button id="arrowBtn" onclick="tool('arrow')">화살표</button><button onclick="undo()">↶ 실행 취소</button><label>색상 <input id="penColor" type="color" value="#e43636" style="vertical-align:middle;width:40px;height:34px"></label><label>굵기 <input id="penWidth" type="range" min="2" max="18" value="5" style="vertical-align:middle;width:85px"></label></div><div class="form-col"><label>사진명</label><input id="photoLabel" value="${esc(p.label)}"></div><div class="form-col"><label>공종</label><select id="photoTrade">${['미분류','철거','목공','전기','설비','도장','타일','금속','가구','마감','기타'].map(x=>`<option ${p.trade===x?'selected':''}>${x}</option>`).join('')}</select></div><div class="form-col"><label>현장 메모</label><textarea id="photoMemo" placeholder="치수, 문제점, 요청사항">${esc(p.memo)}</textarea></div><div class="row"><button class="btn" onclick="saveMarked('${id}')">스케치·기록 저장</button><button class="btn-outline" onclick="downloadPhoto('${id}')">사진 내보내기</button><button class="btn-outline danger" onclick="removePhoto('${id}')">삭제</button></div><p class="note">원본은 유지되고 스케치본은 별도로 보관됩니다. 치수는 실제 측정값을 메모로 남겨주세요.</p>`});setupDraw(p.preview||p.original)}
-function setupDraw(src){let canvas=$('#drawCanvas'),ctx=canvas.getContext('2d');const im=new Image;im.onload=()=>{let max=1300,scale=Math.min(1,max/Math.max(im.width,im.height));canvas.width=Math.round(im.width*scale);canvas.height=Math.round(im.height*scale);ctx.drawImage(im,0,0,canvas.width,canvas.height);drawState={canvas,ctx,history:[canvas.toDataURL()],mode:'pen',drawing:false,start:null}};im.src=src;canvas.onpointerdown=e=>{if(!drawState)return;canvas.setPointerCapture(e.pointerId);let p=pos(e,canvas);drawState.drawing=true;drawState.start=p;drawState.base=ctx.getImageData(0,0,canvas.width,canvas.height);if(drawState.mode==='pen'){ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(p.x+.1,p.y+.1);styleDraw(ctx);ctx.stroke()}};canvas.onpointermove=e=>{if(!drawState?.drawing)return;let p=pos(e,canvas);if(drawState.mode==='pen'){styleDraw(ctx);ctx.lineTo(p.x,p.y);ctx.stroke()}else{ctx.putImageData(drawState.base,0,0);drawArrow(ctx,drawState.start,p)}};canvas.onpointerup=e=>{if(!drawState?.drawing)return;if(drawState.mode==='arrow'){ctx.putImageData(drawState.base,0,0);drawArrow(ctx,drawState.start,pos(e,canvas))}drawState.drawing=false;drawState.history.push(canvas.toDataURL())}}function pos(e,c){let r=c.getBoundingClientRect();return{x:(e.clientX-r.left)*c.width/r.width,y:(e.clientY-r.top)*c.height/r.height}}function styleDraw(c){c.strokeStyle=$('#penColor').value;c.fillStyle=$('#penColor').value;c.lineWidth=Number($('#penWidth').value)*Math.max(1,c.width/750);c.lineCap='round';c.lineJoin='round'}function drawArrow(c,a,b){styleDraw(c);let ang=Math.atan2(b.y-a.y,b.x-a.x),len=22*c.lineWidth/5;c.beginPath();c.moveTo(a.x,a.y);c.lineTo(b.x,b.y);c.moveTo(b.x-len*Math.cos(ang-.5),b.y-len*Math.sin(ang-.5));c.lineTo(b.x,b.y);c.lineTo(b.x-len*Math.cos(ang+.5),b.y-len*Math.sin(ang+.5));c.stroke()}function tool(x){if(!drawState)return;drawState.mode=x;$('#penBtn').classList.toggle('active',x==='pen');$('#arrowBtn').classList.toggle('active',x==='arrow')}function undo(){if(!drawState||drawState.history.length<2)return;drawState.history.pop();let im=new Image;im.onload=()=>{drawState.ctx.clearRect(0,0,drawState.canvas.width,drawState.canvas.height);drawState.ctx.drawImage(im,0,0)};im.src=drawState.history.at(-1)}async function saveMarked(id){let p=photos.find(x=>x.id===id);if(!p||!drawState)return;p.preview=drawState.canvas.toDataURL('image/jpeg',.85);p.label=$('#photoLabel').value;p.trade=$('#photoTrade').value;p.memo=$('#photoMemo').value;await put('photos',p);closeModal()}function downloadFile(s,name){let a=document.createElement('a');a.href=s;a.download=name;a.click()}function downloadPhoto(id){let p=photos.find(x=>x.id===id);if(p)downloadFile(p.preview||p.original,'site-note-'+id+'.jpg')}async function removePhoto(id){if(!confirm('이 사진을 삭제하시겠습니까?'))return;await del('photos',id);closeModal()}
+function openPhoto(id){
+  const p=photos.find(x=>x.id===id);if(!p)return;
+  const trades=['미분류','철거','목공','전기','설비','도장','타일','금속','가구','마감','기타'];
+  showModal({editor:true,title:'사진 확대 · 스케치 · 텍스트',body:`<div class="editor-body">
+    <div id="editorViewport" class="editor-viewport" aria-label="사진 스케치 영역 - 두 손가락으로 확대하거나 이동 모드를 선택하세요"><div id="editorStage" class="editor-stage"><canvas id="drawCanvas" aria-label="스케치 캔버스"></canvas></div><div class="editor-hint">두 손가락 확대·이동 / 이동 도구로 화면 끌기</div></div>
+    <div class="editor-actions">
+      <button id="penBtn" class="active" onclick="tool('pen')">펜</button>
+      <button id="arrowBtn" onclick="tool('arrow')">화살표</button>
+      <button id="textBtn" onclick="tool('text')">텍스트</button>
+      <button id="panBtn" onclick="tool('pan')">손 이동</button>
+      <button onclick="zoomEditor(1.35)" aria-label="확대">＋ 확대</button>
+      <button onclick="zoomEditor(1/1.35)" aria-label="축소">－ 축소</button>
+      <button onclick="resetEditorZoom()">화면 맞춤</button>
+      <span id="editorZoomText" class="editor-zoom">100%</span>
+      <button onclick="undo()">↶ 취소</button>
+    </div>
+    <div class="editor-text-tools"><textarea id="drawTextInput" rows="2" placeholder="사진에 넣을 글씨를 입력한 후, [텍스트]를 선택하고 사진의 위치를 터치하세요."></textarea>
+      <div class="row"><label>색상 <input id="penColor" type="color" value="#e43636" style="width:38px;height:32px"></label><label>굵기 <input id="penWidth" type="range" min="2" max="18" value="5" style="width:78px"></label><label>글자 크기 <select id="drawTextSize" style="width:auto;padding:7px"><option value="25">작게</option><option value="38" selected>보통</option><option value="55">크게</option><option value="76">아주 크게</option></select></label></div>
+    </div>
+    <div class="editor-fields">
+      <p class="note">원본 사진은 변경하지 않습니다. 스케치 및 텍스트가 들어간 사진은 별도 이미지로 저장되어 현장 목록과 JSON 백업에 원본과 함께 남습니다.</p>
+      <div class="form-col"><label>사진명</label><input id="photoLabel" value="${esc(p.label||'현장 사진')}"></div>
+      <div class="form-col"><label>공종</label><select id="photoTrade">${trades.map(t=>`<option ${p.trade===t?'selected':''}>${t}</option>`).join('')}</select></div>
+      <div class="form-col"><label>현장 메모</label><textarea id="photoMemo" placeholder="치수, 문제점, 요청사항">${esc(p.memo||'')}</textarea></div>
+      ${p.preview?`<div class="editor-pair"><figure style="margin:0"><img src="${p.original}" alt="원본"><figcaption>원본</figcaption></figure><figure style="margin:0"><img src="${p.preview}" alt="저장된 스케치"><figcaption>최근 저장 스케치</figcaption></figure></div>`:''}
+      <div class="row"><button class="btn" id="saveSketchBtn" onclick="saveMarked('${id}')">스케치·텍스트 저장</button><button class="btn-outline" onclick="downloadPhoto('${id}','original')">원본 내보내기</button><button class="btn-outline" onclick="downloadPhoto('${id}','sketch')">스케치본 내보내기</button><button class="btn-delete" onclick="removePhoto('${id}')">사진 삭제</button></div>
+    </div>
+  </div>`});
+  setupDraw(p.preview||p.original);
+  for(const field of ['photoLabel','photoTrade','photoMemo']){$('#'+field)?.addEventListener('input',()=>{if(drawState)drawState.dirty=true})}
+}
+function editorClamp(n,min,max){return Math.max(min,Math.min(max,n))}
+function editorPhotoPos(e,canvas){const r=canvas.getBoundingClientRect();return {x:(e.clientX-r.left)*canvas.width/r.width,y:(e.clientY-r.top)*canvas.height/r.height,inside:e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom}}
+function editorSnapshot(){if(!drawState)return;const h=drawState.history;h.push(drawState.canvas.toDataURL('image/jpeg',.94));if(h.length>12)h.shift();drawState.dirty=true}
+function editorTransform(){
+  const s=drawState;if(!s)return;
+  s.stage.style.transform=`translate(calc(-50% + ${s.panX}px), calc(-50% + ${s.panY}px)) scale(${s.zoom})`;
+  const e=$('#editorZoomText');if(e)e.textContent=Math.round(s.zoom*100)+'%';
+}
+function editorZoomAt(next,clientX,clientY){
+  const s=drawState;if(!s)return;
+  const z=editorClamp(next,1,8),r=s.viewport.getBoundingClientRect();
+  const px=(clientX-r.left-r.width/2-s.panX)/s.zoom;
+  const py=(clientY-r.top-r.height/2-s.panY)/s.zoom;
+  s.panX=clientX-r.left-r.width/2-px*z;
+  s.panY=clientY-r.top-r.height/2-py*z;
+  s.zoom=z;
+  if(z===1){s.panX=0;s.panY=0}
+  editorTransform();
+}
+function zoomEditor(factor){const s=drawState;if(!s)return;const r=s.viewport.getBoundingClientRect();editorZoomAt(s.zoom*factor,r.left+r.width/2,r.top+r.height/2)}
+function resetEditorZoom(){const s=drawState;if(!s)return;s.zoom=1;s.panX=0;s.panY=0;editorTransform()}
+function editorStrokeStyle(ctx){
+  const s=drawState,ink=$('#penColor')?.value||'#e43636';
+  ctx.strokeStyle=ink;ctx.fillStyle=ink;
+  ctx.lineWidth=Number($('#penWidth')?.value||5)*Math.max(1,s.canvas.width/1000);
+  ctx.lineCap='round';ctx.lineJoin='round';
+}
+function drawArrow(c,a,b){
+  editorStrokeStyle(c);const ang=Math.atan2(b.y-a.y,b.x-a.x),len=Math.max(12,c.lineWidth*5);
+  c.beginPath();c.moveTo(a.x,a.y);c.lineTo(b.x,b.y);
+  c.moveTo(b.x-len*Math.cos(ang-.5),b.y-len*Math.sin(ang-.5));c.lineTo(b.x,b.y);
+  c.lineTo(b.x-len*Math.cos(ang+.5),b.y-len*Math.sin(ang+.5));c.stroke();
+}
+function editorPutText(at){
+  const s=drawState;if(!s)return;
+  const value=$('#drawTextInput')?.value?.trim();
+  if(!value){toast('먼저 텍스트 입력 칸에 글씨를 작성해 주세요.');return}
+  const ctx=s.ctx,size=Number($('#drawTextSize')?.value||38)*s.canvas.width/1120;
+  ctx.save();ctx.font=`700 ${size}px ${pdfReportFont}`;ctx.textBaseline='top';ctx.lineJoin='round';ctx.lineWidth=Math.max(2,size/7);ctx.strokeStyle='rgba(255,255,255,.93)';ctx.fillStyle=$('#penColor')?.value||'#e43636';
+  let y=at.y;const margin=Math.max(4,size/4),width=s.canvas.width-at.x-margin;
+  const lines=pdfReportWrap(ctx,value,Math.max(size,width));
+  for(const text of lines.slice(0,12)){
+    if(y+size>s.canvas.height)break;
+    ctx.strokeText(text,at.x,y);ctx.fillText(text,at.x,y);y+=size*1.33;
+  }
+  ctx.restore();editorSnapshot();
+}
+function editorFinishStroke(e){
+  const s=drawState;if(!s?.drawing)return;
+  const point=editorPhotoPos(e,s.canvas),ctx=s.ctx;
+  if(s.mode==='arrow'){
+    ctx.putImageData(s.strokeBase,0,0);drawArrow(ctx,s.start,point);
+  }else if(s.mode==='pen'&&!s.strokeMoved){editorStrokeStyle(ctx);ctx.beginPath();ctx.arc(s.start.x,s.start.y,ctx.lineWidth/2,0,Math.PI*2);ctx.fill()}
+  s.drawing=false;s.strokeBase=null;editorSnapshot();
+}
+function setupDraw(src){
+  const canvas=$('#drawCanvas'),viewport=$('#editorViewport'),stage=$('#editorStage');
+  const ctx=canvas.getContext('2d');const im=new Image();
+  im.onerror=()=>toast('사진을 불러오지 못했습니다. 원본 사진을 확인하세요.');
+  im.onload=()=>{
+    const ratio=Math.min(1,2400/Math.max(im.width,im.height));
+    canvas.width=Math.max(1,Math.round(im.width*ratio));canvas.height=Math.max(1,Math.round(im.height*ratio));
+    ctx.drawImage(im,0,0,canvas.width,canvas.height);
+    drawState={canvas,ctx,viewport,stage,history:[canvas.toDataURL('image/jpeg',.94)],mode:'pen',dirty:false,zoom:1,panX:0,panY:0,pointers:new Map(),gesture:null,drawing:false,strokeMoved:false,start:null,strokeBase:null};
+    function fit(){if(!drawState||drawState.canvas!==canvas)return;const r=viewport.getBoundingClientRect(),scale=Math.min(r.width/canvas.width,r.height/canvas.height);stage.style.width=Math.round(canvas.width*scale)+'px';stage.style.height=Math.round(canvas.height*scale)+'px';editorTransform()}
+    fit();const resize=new ResizeObserver(fit);resize.observe(viewport);
+    drawState.cleanup=()=>resize.disconnect();
+  };
+  im.src=src;
+  viewport.addEventListener('pointerdown',e=>{
+    const s=drawState;if(!s)return;
+    e.preventDefault();try{viewport.setPointerCapture(e.pointerId)}catch(_){}
+    s.pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+    if(s.pointers.size===2){
+      if(s.drawing){const hadStroke=s.strokeMoved;if(s.mode==='arrow'&&s.strokeBase)ctx.putImageData(s.strokeBase,0,0);s.drawing=false;s.strokeBase=null;if(hadStroke&&s.mode==='pen')editorSnapshot()}
+      const points=[...s.pointers.values()],mx=(points[0].x+points[1].x)/2,my=(points[0].y+points[1].y)/2,r=viewport.getBoundingClientRect();
+      s.gesture={dist:Math.max(1,Math.hypot(points[0].x-points[1].x,points[0].y-points[1].y)),zoom:s.zoom,fx:(mx-r.left-r.width/2-s.panX)/s.zoom,fy:(my-r.top-r.height/2-s.panY)/s.zoom};
+      return;
+    }
+    if(s.pointers.size!==1)return;
+    s.down={x:e.clientX,y:e.clientY,panX:s.panX,panY:s.panY};
+    const point=editorPhotoPos(e,canvas);s.start=point;
+    if(!point.inside)return;
+    if(s.mode==='pen'||s.mode==='arrow'){
+      s.drawing=true;s.strokeMoved=false;
+      if(s.mode==='arrow')s.strokeBase=ctx.getImageData(0,0,canvas.width,canvas.height);
+      else{editorStrokeStyle(ctx);ctx.beginPath();ctx.moveTo(point.x,point.y)}
+    }
+  });
+  viewport.addEventListener('pointermove',e=>{
+    const s=drawState;if(!s||!s.pointers.has(e.pointerId))return;
+    e.preventDefault();s.pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+    if(s.pointers.size===2&&s.gesture){
+      const pt=[...s.pointers.values()],cx=(pt[0].x+pt[1].x)/2,cy=(pt[0].y+pt[1].y)/2,r=viewport.getBoundingClientRect(),z=editorClamp(s.gesture.zoom*Math.hypot(pt[0].x-pt[1].x,pt[0].y-pt[1].y)/s.gesture.dist,1,8);
+      s.zoom=z;s.panX=cx-r.left-r.width/2-s.gesture.fx*z;s.panY=cy-r.top-r.height/2-s.gesture.fy*z;editorTransform();return;
+    }
+    if(s.mode==='pan'&&s.down){s.panX=s.down.panX+e.clientX-s.down.x;s.panY=s.down.panY+e.clientY-s.down.y;editorTransform();return}
+    if(!s.drawing)return;
+    const at=editorPhotoPos(e,canvas);if(!Number.isFinite(at.x)||!Number.isFinite(at.y))return;
+    if(s.mode==='pen'){editorStrokeStyle(ctx);ctx.lineTo(at.x,at.y);ctx.stroke()}else if(s.mode==='arrow'){ctx.putImageData(s.strokeBase,0,0);drawArrow(ctx,s.start,at)}
+    s.strokeMoved=true;
+  });
+  const release=e=>{
+    const s=drawState;if(!s||!s.pointers.has(e.pointerId))return;
+    e.preventDefault();const hadGesture=!!s.gesture;
+    if(s.drawing&&!hadGesture)editorFinishStroke(e);
+    else if(s.mode==='text'&&!hadGesture&&s.pointers.size===1&&s.down&&Math.hypot(e.clientX-s.down.x,e.clientY-s.down.y)<10){
+      const at=editorPhotoPos(e,canvas);if(at.inside)editorPutText(at);
+    }
+    s.pointers.delete(e.pointerId);s.drawing=false;s.down=null;
+    if(s.pointers.size<2)s.gesture=null;
+  };
+  viewport.addEventListener('pointerup',release);viewport.addEventListener('pointercancel',release);
+  viewport.addEventListener('wheel',e=>{if(!drawState)return;e.preventDefault();editorZoomAt(drawState.zoom*(e.deltaY<0?1.14:1/1.14),e.clientX,e.clientY)},{passive:false});
+}
+function tool(x){
+  const s=drawState;if(!s)return;s.mode=x;
+  for(const key of ['pen','arrow','text','pan']){const b=$('#'+key+'Btn');if(b)b.classList.toggle('active',x===key)}
+  s.viewport.classList.toggle('pan-active',x==='pan');
+  if(x==='text')$('#drawTextInput')?.focus();
+}
+function undo(){
+  const s=drawState;if(!s||s.history.length<2)return;
+  s.history.pop();const im=new Image();s.drawing=false;
+  im.onload=()=>{if(drawState!==s)return;s.ctx.clearRect(0,0,s.canvas.width,s.canvas.height);s.ctx.drawImage(im,0,0,s.canvas.width,s.canvas.height);s.dirty=true};
+  im.src=s.history[s.history.length-1];
+}
+async function saveMarked(id){
+  const p=photos.find(x=>x.id===id),s=drawState;if(!p||!s)return;
+  const button=$('#saveSketchBtn');if(button)button.disabled=true;
+  try{
+    const updated={...p,preview:s.canvas.toDataURL('image/jpeg',.88),label:$('#photoLabel').value,trade:$('#photoTrade').value,memo:$('#photoMemo').value};
+    await put('photos',updated);s.dirty=false;s.cleanup?.();closeModal(true);
+  }catch(e){if(button)button.disabled=false;toast('사진 저장 실패: '+e.message)}
+}
+function downloadFile(s,name){const a=document.createElement('a');a.href=s;a.download=name;a.click()}
+function downloadPhoto(id,kind='sketch'){
+  const p=photos.find(x=>x.id===id);if(!p)return;
+  const data=kind==='original'?p.original:(p.preview||p.original);
+  downloadFile(data,`site-note-${id}-${kind==='original'?'original':'sketch'}.jpg`);
+}
+async function removePhoto(id){
+  if(!confirm('원본과 스케치본을 모두 삭제하시겠습니까?'))return;
+  await del('photos',id);drawState?.cleanup?.();drawState=null;closeModal(true);
+}
 function newNote(){showModal({title:'새 작업일지',body:`<form id="noteForm"><div class="form-col"><label>작업 제목 *</label><input name="title" required placeholder="예: 목공 천장틀 설치"></div><div class="form-col"><label>공종</label><select name="trade">${['철거','목공','전기','설비','도장','타일','금속','가구','마감','기타'].map(x=>`<option>${x}</option>`).join('')}</select></div><div class="form-col"><label>작업 내용·특이사항</label><textarea name="content" required placeholder="작업 진도, 문제점, 조치 내용"></textarea></div><button class="btn" style="width:100%">작업일지 저장</button></form>`});$('#noteForm').onsubmit=async e=>{e.preventDefault();let f=new FormData(e.currentTarget);await put('notes',{id:uid(),projectId,title:f.get('title'),trade:f.get('trade'),content:f.get('content'),created:Date.now()});closeModal()}}
 function newTask(){if(!projectId){toast('먼저 현장을 선택해 주세요.');return}showModal({title:'보수·수정 요청',body:`<form id="taskForm"><div class="form-col"><label>요청 내용 *</label><input name="title" required placeholder="예: 카운터 측면 마감 보수"></div><div class="form-col"><label>위치·담당자</label><input name="owner" placeholder="예: 1층 홀 / 목공팀"></div><div class="form-col"><label>상세 내용</label><textarea name="content"></textarea></div><button class="btn" style="width:100%">요청 등록</button></form>`});$('#taskForm').onsubmit=async e=>{e.preventDefault();let f=new FormData(e.currentTarget);await put('tasks',{id:uid(),projectId,title:f.get('title'),owner:f.get('owner'),content:f.get('content'),status:'요청',created:Date.now()});closeModal()}}
 function taskHTML(t){return `<div class="item"><div class="row space"><strong>${esc(t.title)}</strong><span class="pill ${t.status==='요청'?'status-requested':t.status==='진행 중'?'status-progress':'status-done'}">${esc(t.status)}</span></div><p>${esc(t.content||'').replace(/\n/g,'<br>')}</p><p class="muted small">${esc(t.owner||'담당 미정')} · ${fmt(t.created)}</p><div class="row"><select onchange="changeStatus('${t.id}',this.value)" style="max-width:140px"><option ${t.status==='요청'?'selected':''}>요청</option><option ${t.status==='진행 중'?'selected':''}>진행 중</option><option ${t.status==='완료'?'selected':''}>완료</option></select><button class="btn-outline small danger" onclick="removeItem('tasks','${t.id}')">삭제</button></div></div>`}async function changeStatus(id,s){let o=tasks.find(t=>t.id===id);o.status=s;o.updated=Date.now();await put('tasks',o)}function taskPage(){app.innerHTML=`<div class="hero"><div><h1>보수 관리</h1><span class="muted small">전체 프로젝트 수정·보수 요청 현황</span></div></div>${tasks.length?tasks.slice().sort((a,b)=>b.created-a.created).map(t=>`<div class="muted small">${esc(projects.find(p=>p.id===t.projectId)?.name||'삭제된 현장')}</div>${taskHTML(t)}`).join(''):'<div class="empty">등록된 보수 요청이 없습니다. 프로젝트에서 새 요청을 등록해 주세요.</div>'}`}
@@ -27,7 +282,7 @@ function reportProjectBlock(p){
   const aud=audios.filter(x=>x.projectId===id).sort((a,b)=>a.created-b.created);
   const content=x=>esc(x||'').replace(/\n/g,'<br>');
   const noContent=label=>`<p class="empty-report">${label}이(가) 없습니다.</p>`;
-  const imageHTML=ps.length?`<div class="photo-grid-report">${ps.map((x,i)=>`<article class="photo-entry"><img src="${esc(x.preview||x.original||'')}" alt="현장 사진 ${i+1}"><div class="photo-caption"><strong>${i+1}. ${esc(x.label||'현장 사진')}</strong><div>${esc(x.trade||'미분류')} · ${fmt(x.created)}</div>${x.memo?`<p>${content(x.memo)}</p>`:''}</div></article>`).join('')}</div>`:noContent('현장 사진');
+  const imageHTML=ps.length?`<div class="photo-grid-report">${ps.map((x,i)=>`<article class="photo-entry"><div style="display:grid;grid-template-columns:${x.preview?'1fr 1fr':'1fr'};gap:5px">${x.preview?`<div><img src="${esc(x.original||'')}" alt="원본 사진 ${i+1}"><small>원본</small></div><div><img src="${esc(x.preview)}" alt="스케치 사진 ${i+1}"><small>스케치본</small></div>`:`<img src="${esc(x.original||'')}" alt="원본 사진 ${i+1}">`}</div><div class="photo-caption"><strong>${i+1}. ${esc(x.label||'현장 사진')}</strong><div>${esc(x.trade||'미분류')} · ${fmt(x.created)}</div>${x.memo?`<p>${content(x.memo)}</p>`:''}</div></article>`).join('')}</div>`:noContent('현장 사진');
   const noteHTML=ns.length?ns.map(x=>`<article class="record"><div class="record-head"><strong>${esc(x.title||'작업 기록')}</strong><span>${esc(x.trade||'')} · ${fmt(x.created)}</span></div><p>${content(x.content)}</p></article>`).join(''):noContent('작업일지');
   const taskHTML=ts.length?ts.map(x=>`<article class="record"><div class="record-head"><strong>${esc(x.title||'보수 기록')}</strong><span>${esc(x.status||'요청')}</span></div><p>${content(x.content)}</p><small>${esc(x.owner||'담당 미정')} · ${fmt(x.created)}</small></article>`).join(''):noContent('보수 기록');
   const audioHTML=aud.length?aud.map(x=>`<article class="record"><div class="record-head"><strong>${esc(x.title||'음성 메모')}</strong><span>${fmt(x.created)}</span></div><p>${x.text?content(x.text):'텍스트 기록이 없습니다. (음성 파일은 PDF에 포함되지 않습니다.)'}</p></article>`).join(''):noContent('음성 메모 텍스트');
@@ -155,27 +410,21 @@ async function pdfReportBuild(selected){
     line(`사진 ${ps.length}     작업일지 ${ns.length}     보수 ${ts.length}     음성 ${aud.length}`,M+17,y+11,22,true,green);y+=84;
     title('01 / 현장 사진');
     if(!ps.length)text('현장 사진 없음',0,20,32,gray);
-    const GAP=24,CW=(RIGHT-M-GAP)/2,PH=315;
-    for(let i=0;i<ps.length;i+=2){
-      need(445);
-      const rowTop=y,row=ps.slice(i,i+2);
-      for(let j=0;j<row.length;j++){
-        const photo=row[j],x=M+j*(CW+GAP);
-        fill(x,rowTop,CW,PH,'#f2f5f3');
-        try{
-          const im=await pdfReportImage(photo.preview||photo.original);
-          if(im){const scale=Math.min(CW/im.width,PH/im.height);const iw=im.width*scale,ih=im.height*scale;ctx.drawImage(im,x+(CW-iw)/2,rowTop+(PH-ih)/2,iw,ih)}
-        }catch(e){line('사진 읽기 실패',x+20,rowTop+20,19,false,gray)}
-        font(18,true,ink);
-        const caption=pdfReportWrap(ctx,(i+j+1)+'. '+(photo.label||'현장 사진'),CW);
-        const cap=caption.slice(0,2);
-        cap.forEach((z,k)=>line(z,x,rowTop+PH+10+k*23,18,true,ink));
-        font(17,false,gray);
-        const meta=pdfReportWrap(ctx,(photo.trade||'미분류')+' / '+pdfReportDate(photo.created),CW).slice(0,1);
-        meta.forEach((z,k)=>line(z,x,rowTop+PH+58+k*21,17,false,gray));
-        if(photo.memo){font(17,false,ink);const memo=pdfReportWrap(ctx,photo.memo,CW).slice(0,2);memo.forEach((z,k)=>line(z,x,rowTop+PH+83+k*22,17,false,ink))}
+    const GAP=24,CW=(RIGHT-M-GAP)/2,PH=310;
+    for(let i=0;i<ps.length;i++){
+      need(455);const item=ps[i],rowTop=y;
+      const imgs=item.preview?[item.original,item.preview]:[item.original];
+      for(let j=0;j<imgs.length;j++){
+        const x=M+j*(CW+GAP);fill(x,rowTop,CW,PH,'#f2f5f3');
+        try{const im=await pdfReportImage(imgs[j]);if(im){const scale=Math.min(CW/im.width,PH/im.height),iw=im.width*scale,ih=im.height*scale;ctx.drawImage(im,x+(CW-iw)/2,rowTop+(PH-ih)/2,iw,ih)}}
+        catch(e){line('사진 읽기 실패',x+20,rowTop+20,19,false,gray)}
+        line(item.preview?(j===0?'원본':'스케치본'):'원본',x,rowTop+PH+8,18,true,green);
       }
-      y+=445;
+      y=rowTop+PH+35;
+      text(`${i+1}. ${item.label||'현장 사진'}`,0,20,27,ink,true);
+      text(`${item.trade||'미분류'} / ${pdfReportDate(item.created)}`,0,17,25,gray);
+      if(item.memo)text(item.memo,0,18,26,ink);
+      y=Math.max(y,rowTop+455);
     }
     padding();title('02 / 작업일지');
     if(!ns.length)text('작성된 작업일지 없음',0,20,32,gray);
@@ -234,14 +483,13 @@ function openDirectPdf(){
 
 function backupPage(){
   const reportButtons=projects.length?projects.slice().sort((a,b)=>b.created-a.created).map(p=>`<div class="bar" style="padding:10px 0;border-bottom:1px solid var(--line)"><div style="min-width:0"><strong>${esc(p.name)}</strong><div class="muted small">사진 ${photos.filter(x=>x.projectId===p.id).length}장 · 작업일지 ${notes.filter(x=>x.projectId===p.id).length}건</div></div><button class="btn-outline small" onclick="createDirectPdf('${p.id}')">PDF 파일 만들기</button></div>`).join(''):'<div class="empty">등록된 프로젝트가 없습니다. 먼저 현장을 추가해 주세요.</div>';
-  app.innerHTML=`<h1>백업 · 설정</h1><p class="muted">현장 기록은 현재 기기의 앱 저장공간에 보관됩니다. <strong>PDF는 열어보는 문서</strong>, <strong>JSON은 앱 복원용 파일</strong>입니다. 둘 다 iCloud Drive에 보관하는 것을 권장합니다.</p><div class="item"><h2>현장 보고서 PDF</h2><p class="muted small">현장 사진·스케치 이미지·작업일지·보수 관리 내용을 PDF로 볼 수 있게 정리합니다. 아이폰에서 <strong>PDF 파일 만들기 → iCloud에 저장하기(공유) → 파일에 저장 → iCloud Drive → 현장노트</strong> 순서로 저장하세요. PDF 파일은 직접 만들어지지만 iCloud Drive에 저장하려면 공유 메뉴에서 저장을 선택해야 합니다.</p>${reportButtons}${projects.length?'<button class="btn" style="margin-top:12px;width:100%" onclick="createDirectPdf(\'all\')">전체 프로젝트 PDF 파일 만들기</button>':''}<p class="note">PDF에는 사진과 텍스트 메모가 이미지 기반 페이지로 포함됩니다. 글자 검색·복사는 제한될 수 있습니다. 녹음한 음성 파일 자체는 포함되지 않습니다. PDF 파일은 앱에 기록을 복원하는 용도로 사용할 수 없습니다.</p></div><div class="item"><h2>앱 복구용 백업(JSON)</h2><p class="muted small">JSON은 사람이 읽기 위한 문서가 아니라 <strong>프로젝트·사진 원본·스케치·작업일지·보수·음성 파일을 다시 앱에 넣기 위한 복구용 백업</strong>입니다. 삭제하지 말고 iCloud Drive에 따로 보관해 주세요.</p><div class="row"><button class="btn-outline" onclick="exportBackup()">복원용 JSON 파일 다운로드</button><button class="btn-outline" onclick="shareBackup()">공유 메뉴로 보내기</button></div><p id="backupStatus" class="note" role="status" aria-live="polite">다운로드한 JSON 파일은 파일 앱에서 확인한 후 iCloud Drive → 현장노트 폴더로 저장하세요. 이 앱은 iCloud 저장 완료 여부를 직접 확인할 수 없습니다.</p></div><div class="item"><h2>JSON 백업에서 복원</h2><p class="muted small">iCloud Drive 또는 컴퓨터에 보관한 JSON(.json 또는 .txt) 백업 파일을 선택하세요. 기존 기록에 백업 내용을 합치며 동일한 ID는 백업 파일의 내용으로 교체됩니다.</p><button class="btn-outline" onclick="$('#importBackup').click()">JSON 백업 파일 선택·복원</button></div><div class="item"><h2>사진 앨범 분리</h2><p>현장노트 카메라로 촬영한 사진은 기본 사진 앱에 자동 저장되지 않습니다. 앱 내부 저장소에 저장되며 위 JSON 백업 파일에 포함됩니다.</p><p class="note">브라우저 데이터 삭제·휴대폰 교체·저장공간 정리 등으로 앱 내부 기록이 사라질 수 있으므로 정기적으로 JSON 백업을 보관하세요.</p></div><div class="item"><h2>아이폰 설치</h2><p>HTTPS 주소에서 Safari로 열기 → 공유 → 홈 화면에 추가 → 추가</p></div>`;
+  app.innerHTML=`<h1>백업 · 설정</h1><div id="backupReminder">${backupReminderInner(false)}</div><p class="muted">현장 기록은 현재 기기의 앱 저장공간에 보관됩니다. <strong>PDF는 열어보는 문서</strong>, <strong>JSON은 앱 복원용 파일</strong>입니다. 둘 다 iCloud Drive에 보관하는 것을 권장합니다.</p><div class="item"><h2>현장 보고서 PDF</h2><p class="muted small">현장 사진·스케치 이미지·작업일지·보수 관리 내용을 PDF로 볼 수 있게 정리합니다. 아이폰에서 <strong>PDF 파일 만들기 → iCloud에 저장하기(공유) → 파일에 저장 → iCloud Drive → 현장노트</strong> 순서로 저장하세요. PDF 파일은 직접 만들어지지만 iCloud Drive에 저장하려면 공유 메뉴에서 저장을 선택해야 합니다.</p>${reportButtons}${projects.length?'<button class="btn" style="margin-top:12px;width:100%" onclick="createDirectPdf(\'all\')">전체 프로젝트 PDF 파일 만들기</button>':''}<p class="note">PDF에는 원본과 스케치본을 비교할 수 있도록 보고서에 나란히 배치합니다. 사진과 텍스트 메모는 이미지 기반 페이지로 포함됩니다. 글자 검색·복사는 제한될 수 있습니다. 녹음한 음성 파일 자체는 포함되지 않습니다. PDF 파일은 앱에 기록을 복원하는 용도로 사용할 수 없습니다.</p></div><div class="item"><h2>현장 데이터 백업 (JSON 저장하기)</h2><p class="muted small">다운로드와 공유는 같은 내용의 백업을 저장하는 두 가지 방법입니다. 평소에는 둘 중 하나만 사용하면 됩니다. JSON은 사람이 읽기 위한 문서가 아니라 <strong>프로젝트·사진 원본·스케치·작업일지·보수·음성 파일을 다시 앱에 넣기 위한 복구용 백업</strong>입니다. 삭제하지 말고 iCloud Drive에 따로 보관해 주세요.</p><div class="row"><button class="btn-outline" onclick="exportBackup()">JSON 파일 다운로드</button><button class="btn-outline" onclick="shareBackup()">iCloud에 백업하기 (공유)</button></div><p id="backupStatus" class="note" role="status" aria-live="polite">다운로드한 JSON 파일은 파일 앱에서 확인한 후 iCloud Drive → 현장노트 폴더로 저장하세요. 이 앱은 iCloud 저장 완료 여부를 직접 확인할 수 없습니다.</p></div><div class="item"><h2>저장한 JSON 파일로 복원하기</h2><p class="muted small">iCloud Drive 또는 컴퓨터에 보관한 JSON(.json 또는 .txt) 백업 파일을 선택하세요. 휴대폰 변경이나 기록 복구가 필요할 때만 사용합니다. 현재 기록에 백업 내용을 합치며 동일한 ID는 백업 파일 내용으로 교체되므로, 복원 전 현재 데이터도 백업하세요.</p><button class="btn-outline" onclick="$('#importBackup').click()">JSON 파일 불러와 복원</button></div><div class="item"><h2>사진 앨범 분리</h2><p>현장노트 카메라로 촬영한 사진은 기본 사진 앱에 자동 저장되지 않습니다. 앱 내부 저장소에 저장되며 위 JSON 백업 파일에 포함됩니다.</p><p class="note">브라우저 데이터 삭제·휴대폰 교체·저장공간 정리 등으로 앱 내부 기록이 사라질 수 있으므로 정기적으로 JSON 백업을 보관하세요.</p></div><div class="item"><h2>아이폰 설치</h2><p>HTTPS 주소에서 Safari로 열기 → 공유 → 홈 화면에 추가 → 추가</p></div>`;
 }
 
 function backupPayload(){let all={app:'site-note',version:1,exportedAt:new Date().toISOString()};const snapshot={projects,photos,notes,tasks,audios};for(const n of schema)all[n]=snapshot[n];return JSON.stringify(all)}
 function backupName(ext='json'){const now=new Date(),pad=n=>String(n).padStart(2,'0');return `site-note-backup-${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}_${pad(now.getHours())}-${pad(now.getMinutes())}-${pad(now.getSeconds())}.${ext}`}
 function showBackupStatus(message){const el=$('#backupStatus');if(el)el.textContent=message}
-function exportBackup(){try{const blob=new Blob([backupPayload()],{type:'application/json'});const url=URL.createObjectURL(blob);downloadFile(url,backupName());showBackupStatus('백업 파일 다운로드를 요청했습니다. 다운로드된 파일을 파일 앱에서 찾아 iCloud Drive → 현장노트 폴더로 이동해 주세요. 앱에서 직접 저장 여부를 확인할 수는 없습니다.');setTimeout(()=>URL.revokeObjectURL(url),30000)}catch(e){toast('백업 파일 생성 실패: '+e.message)}}
-async function shareBackup(){let json;try{json=backupPayload()}catch(e){toast('백업 파일 생성 실패: '+e.message);return}let file=null;try{if(typeof navigator.share==='function'&&typeof navigator.canShare==='function'&&typeof File==='function'){const candidates=[new File([json],backupName('json'),{type:'application/json'}),new File([json],backupName('txt'),{type:'text/plain'})];for(const candidate of candidates){if(navigator.canShare({files:[candidate]})){file=candidate;break}}}}catch(e){file=null}if(!file){showBackupStatus('이 브라우저는 백업 파일 공유를 지원하지 않습니다. JSON 파일 다운로드로 전환합니다. Safari 다운로드 위치가 iCloud Drive인지 확인해 주세요.');exportBackup();return}try{await navigator.share({files:[file]});showBackupStatus('백업 파일 공유가 종료되었습니다. iCloud Drive 저장 여부는 확인할 수 없습니다. 파일 앱 → iCloud Drive → 현장노트에서 생성된 파일을 확인해 주세요.')}catch(e){if(e.name==='AbortError')showBackupStatus('공유가 취소되었습니다. iCloud Drive에는 아직 저장되지 않았을 수 있습니다.');else{showBackupStatus('공유에 실패했습니다. 오른쪽 “백업 파일 다운로드” 버튼을 이용해 주세요.');toast('공유 실패: '+e.message)}}}
-$('#importBackup').onchange=async e=>{let file=e.target.files[0];if(!file)return;try{let data=JSON.parse(await file.text());if(data.app!=='site-note'||!schema.every(k=>Array.isArray(data[k])))throw Error('올바른 현장노트 백업 파일이 아닙니다.');if(!confirm('현재 데이터에 백업 내용을 합치시겠습니까?'))return;for(let n of schema)for(let item of data[n])await request(tx(n,'readwrite').put(item));await refresh();toast('복원이 완료되었습니다.')}catch(err){toast('복원 실패: '+err.message)}finally{e.target.value=''}};document.querySelectorAll('.nav').forEach(n=>n.onclick=()=>go(n.dataset.nav));async function main(){if(!window.indexedDB){app.innerHTML='<div class="empty">이 브라우저는 앱 저장소를 지원하지 않습니다.</div>';return}try{db=await openDB();await refresh();if('serviceWorker'in navigator&&location.protocol==='https:')navigator.serviceWorker.register('./sw.js').catch(()=>{})}catch(e){app.innerHTML='<div class="empty">앱 저장소 접근에 실패했습니다. Safari 개인정보 보호 설정을 확인하세요.</div>'}}main();
+function exportBackup(){try{const blob=new Blob([backupPayload()],{type:'application/json'});const url=URL.createObjectURL(blob);downloadFile(url,backupName());markBackupFilePrepared();showBackupStatus('백업 파일 다운로드를 요청했습니다. 다운로드된 파일을 파일 앱에서 찾아 iCloud Drive → 현장노트 폴더로 이동해 주세요. 앱에서 직접 저장 여부를 확인할 수는 없습니다.');setTimeout(()=>URL.revokeObjectURL(url),30000)}catch(e){toast('백업 파일 생성 실패: '+e.message)}}
+async function shareBackup(){let json;try{json=backupPayload()}catch(e){toast('백업 파일 생성 실패: '+e.message);return}let file=null;try{if(typeof navigator.share==='function'&&typeof navigator.canShare==='function'&&typeof File==='function'){const candidates=[new File([json],backupName('json'),{type:'application/json'}),new File([json],backupName('txt'),{type:'text/plain'})];for(const candidate of candidates){if(navigator.canShare({files:[candidate]})){file=candidate;break}}}}catch(e){file=null}if(!file){showBackupStatus('이 브라우저는 백업 파일 공유를 지원하지 않습니다. JSON 파일 다운로드로 전환합니다. Safari 다운로드 위치가 iCloud Drive인지 확인해 주세요.');exportBackup();return}try{await navigator.share({files:[file]});markBackupFilePrepared();showBackupStatus('백업 파일 공유가 종료되었습니다. iCloud Drive 저장 여부는 확인할 수 없습니다. 파일 앱 → iCloud Drive → 현장노트에서 생성된 파일을 확인해 주세요.')}catch(e){if(e.name==='AbortError')showBackupStatus('공유가 취소되었습니다. iCloud Drive에는 아직 저장되지 않았을 수 있습니다.');else{showBackupStatus('공유에 실패했습니다. 오른쪽 “백업 파일 다운로드” 버튼을 이용해 주세요.');toast('공유 실패: '+e.message)}}}
+$('#importBackup').onchange=async e=>{let file=e.target.files[0];if(!file)return;try{let data=JSON.parse(await file.text());if(data.app!=='site-note'||!schema.every(k=>Array.isArray(data[k])))throw Error('올바른 현장노트 백업 파일이 아닙니다.');if(!confirm('현재 데이터에 백업 내용을 합치시겠습니까?'))return;for(let n of schema)for(let item of data[n])await request(tx(n,'readwrite').put(item));markBackupDataChanged();await refresh();toast('복원이 완료되었습니다.')}catch(err){toast('복원 실패: '+err.message)}finally{e.target.value=''}};document.querySelectorAll('.nav').forEach(n=>n.onclick=()=>go(n.dataset.nav));async function main(){if(!window.indexedDB){app.innerHTML='<div class="empty">이 브라우저는 앱 저장소를 지원하지 않습니다.</div>';return}try{db=await openDB();await refresh();if('serviceWorker'in navigator&&location.protocol==='https:')navigator.serviceWorker.register('./sw.js').catch(()=>{})}catch(e){app.innerHTML='<div class="empty">앱 저장소 접근에 실패했습니다. Safari 개인정보 보호 설정을 확인하세요.</div>'}}main();
 </script></body></html>
-
