@@ -66,15 +66,27 @@
 
 .sheet-reader .modal-head,.sheet-reader .sheet-tools,.sheet-reader .sheet-nav{display:flex;position:absolute;z-index:2;background:#fffffff2;border-radius:14px;padding:4px;gap:5px}
 .sheet-reader .modal-head{top:max(6px,env(safe-area-inset-top));left:max(8px,env(safe-area-inset-left))}
-.sheet-reader .modal-head h2,.sheet-reader .modal-head .close{display:none}
-.sheet-reader .sheet-tools{max-width:calc(50% - 12px);flex-wrap:wrap;bottom:max(6px,env(safe-area-inset-bottom));left:max(8px,env(safe-area-inset-left))}
-.sheet-reader .sheet-nav{max-width:calc(50% - 12px);flex-wrap:wrap;bottom:max(6px,env(safe-area-inset-bottom));right:max(8px,env(safe-area-inset-right))}
+.sheet-reader .modal-head h2{display:none}
+.sheet-reader .sheet-tools{max-width:calc(100% - 24px);flex-wrap:wrap;bottom:max(6px,env(safe-area-inset-bottom));left:max(8px,env(safe-area-inset-left))}
+.sheet-reader .sheet-nav{top:max(6px,env(safe-area-inset-top));left:50%;transform:translateX(-50%);white-space:nowrap}
 .sheet-reader .sheet-meta{display:block;position:absolute;top:max(6px,env(safe-area-inset-top));right:max(8px,env(safe-area-inset-right));z-index:3}
 .sheet-reader .sheet-meta strong{display:none}
 .sheet-reader .sheet-tools button,.sheet-reader .sheet-nav button{white-space:nowrap;min-height:40px;padding:8px 10px;font-size:12px}
 .sheet-reader .sheet-nav output{white-space:nowrap;font-size:12px}
 
 }
+
+.sheet-reader .sheet-area{position:relative;touch-action:none;user-select:none;-webkit-user-select:none;overscroll-behavior:contain}
+.sheet-surface{position:absolute;inset:0;width:100%;height:100%;transform-origin:0 0;pointer-events:none}
+.sheet-ink{z-index:1}
+.sheet-reader .sheet-tools{flex-wrap:wrap}
+#sheetZoom{font-size:11px;color:#456456;white-space:nowrap}
+@media (orientation:landscape) and (pointer:coarse), (orientation:landscape) and (max-height:550px){
+.sheet-reader .sheet-area{position:absolute;inset:0}
+.sheet-reader .sheet-tools #sheetZoom{max-width:180px;overflow:hidden;text-overflow:ellipsis}
+.sheet-reader .modal-head .close{display:block;flex:none;min-width:40px;height:40px}
+}
+
 @media print{#appBack,#photoViewer,.modal-back{display:none!important}}
 </style></head><body><main class="shell"><header class="top"><button id="appBack" class="app-back hidden" type="button" onclick="appGoBack()" aria-label="이전 화면으로 돌아가기">← 뒤로</button><div class="brand">SITE NOTE <span style="color:#6d9e86">/ FIELD</span></div><small id="today"></small></header><div id="app"></div></main><nav class="footer"><button class="nav active" data-nav="home"><span>▦</span>프로젝트</button><button class="nav" data-nav="tasks"><span>☑</span>보수 관리</button><button class="nav" data-nav="backup"><span>▣</span>백업·설정</button></nav><div id="overlay" class="modal-bg hidden"><div class="modal" id="modal"></div></div><input type="file" id="importPhoto" accept="image/*" style="display:none"><input type="file" id="importBackup" accept="application/json,text/plain,.json,.txt" style="display:none"><div id="report-print" style="display:none"></div><script>
 'use strict';
@@ -210,7 +222,7 @@ function project(){let p=projects.find(x=>x.id===projectId);if(!p){go('home');re
 let referenceURL = null;
 function closeDocumentPreview() {
   if(sheetSession){
-    modal.classList.remove("sheet-reader");sheetSession.finish?.();sheetSession.observer?.disconnect();sheetSession.renderTask?.cancel();
+    modal.classList.remove("sheet-reader");sheetSession.finish?.();clearTimeout(sheetSession.renderTimer);sheetSession.observer?.disconnect();sheetSession.renderTask?.cancel();
     sheetSession.loading?.destroy().catch(()=>{});sheetSession=null;
   }
   if (!referenceURL) return;
@@ -321,70 +333,203 @@ function paintSheetLine(ctx,line,w,h) {
   for(const [x,y] of pts.slice(1)) ctx.lineTo(x*w,y*h);
   ctx.stroke();ctx.restore();
 }
-function setSheetTool(s,tool) {
+function setSheetTool(s, tool) {
   s.finish?.();
-  s.tool=tool;
-  for(const button of s.tools.querySelectorAll('[data-tool]'))button.setAttribute('aria-pressed',String(button.dataset.tool===tool));
-  s.area.classList.toggle('drawing', tool!=='view');
-}
-function bindSheetInk(s,canvas) {
-  const point=e=>{
-    const r=canvas.getBoundingClientRect();
-    return [(e.clientX-r.left)/r.width,(e.clientY-r.top)/r.height];
-  };
-  let stroke=null,pointer;
-  const ctx=canvas.getContext('2d');
-  const paint=line=>paintSheetLine(ctx,line,canvas.width,canvas.height);
-  for(const line of s.marks[s.page]||[])paint(line);
-  function finish() {
-    if(!stroke)return;
-    const page=s.page;
-    const lines=[...(s.marks[page]||[]),stroke];
-    s.marks[page]=lines;stroke=null;s.finish=null;
-    if(canvas.hasPointerCapture(pointer))canvas.releasePointerCapture(pointer);
-    s.pending=(s.pending||Promise.resolve()).then(()=>writeSheetMarks(s,page,lines)).catch(()=>toast('필기를 저장하지 못했습니다. 기기 저장 공간을 확인해 주세요.'));
+  s.tool = tool;
+  for (const button of s.tools.querySelectorAll('[data-tool]')) {
+    button.setAttribute('aria-pressed', String(button.dataset.tool === tool));
   }
-  canvas.onpointerdown=e=>{
-    if(s.tool==='view'||stroke||e.button!==0)return;
-    e.preventDefault();pointer=e.pointerId;
-    const r=canvas.getBoundingClientRect();
-    stroke={erase:s.tool==='erase',color:'#d83b32',width:(s.tool==='erase'?22:2.5)/Math.min(r.width,r.height),points:[point(e)]};
-    canvas.setPointerCapture(pointer);s.finish=finish;paint(stroke);
+  s.area.classList.toggle('drawing', tool !== 'view');
+}
+function sheetBounds(s) {
+  const rect = s.area.getBoundingClientRect();
+  const fit = Math.min(rect.width / s.size.width, rect.height / s.size.height);
+  const width = s.size.width * fit * s.zoom;
+  const height = s.size.height * fit * s.zoom;
+  s.panX = Math.max(-Math.max(0, (width - rect.width) / 2), Math.min(Math.max(0, (width - rect.width) / 2), s.panX));
+  s.panY = Math.max(-Math.max(0, (height - rect.height) / 2), Math.min(Math.max(0, (height - rect.height) / 2), s.panY));
+  return {width, height, left:(rect.width-width)/2+s.panX, top:(rect.height-height)/2+s.panY, fit};
+}
+function sheetPoint(s, event) {
+  const rect = s.area.getBoundingClientRect(), bounds = sheetBounds(s);
+  return [(event.clientX-rect.left-bounds.left)/bounds.width, (event.clientY-rect.top-bounds.top)/bounds.height];
+}
+function redrawSheetInk(s) {
+  if (!s.ink || !s.size) return;
+  const rect = s.area.getBoundingClientRect(), bounds = sheetBounds(s);
+  const density = Math.min(window.devicePixelRatio || 1, 3);
+  const width = Math.max(1, Math.round(rect.width*density));
+  const height = Math.max(1, Math.round(rect.height*density));
+  if (s.ink.width !== width || s.ink.height !== height) {s.ink.width=width; s.ink.height=height;}
+  const ctx = s.ink.getContext('2d');
+  ctx.clearRect(0,0,width,height);
+  ctx.save();
+  ctx.scale(density,density);
+  ctx.translate(bounds.left,bounds.top);
+  ctx.beginPath();ctx.rect(0,0,bounds.width,bounds.height);ctx.clip();
+  for (const line of s.marks[s.page] || []) paintSheetLine(ctx,line,bounds.width,bounds.height);
+  if (s.stroke) paintSheetLine(ctx,s.stroke,bounds.width,bounds.height);
+  ctx.restore();
+}
+function previewSheetView(s) {
+  if (!s.size) return;
+  const bounds=sheetBounds(s), old=s.renderedBounds;
+  if (s.base && old) {
+    const ratio=bounds.width/old.width;
+    s.base.style.transform='translate('+(bounds.left-old.left*ratio)+'px,'+(bounds.top-old.top*ratio)+'px) scale('+ratio+')';
+  }
+  redrawSheetInk(s);
+  s.zoomLabel.textContent=Math.round(s.zoom*100)+'%';
+}
+function scheduleSheetRender(s) {
+  clearTimeout(s.renderTimer);
+  s.renderTimer=setTimeout(()=>renderSheetView(s),120);
+}
+async function renderSheetView(s) {
+  if(sheetSession!==s || !s.pdfPage || !s.size)return;
+  const token=++s.revision;
+  s.renderTask?.cancel();
+  const rect=s.area.getBoundingClientRect(), bounds=sheetBounds(s);
+  if(!rect.width||!rect.height)return;
+  // Render only the visible window at device resolution, even at large zoom.
+  const density=Math.min(Math.max(window.devicePixelRatio||1,2),3,4096/Math.max(rect.width,rect.height),Math.sqrt(8000000/(rect.width*rect.height)));
+  const canvas=document.createElement('canvas');
+  canvas.className='sheet-surface';
+  canvas.setAttribute('aria-hidden','true');
+  canvas.width=Math.ceil(rect.width*density);canvas.height=Math.ceil(rect.height*density);
+  const viewport=s.pdfPage.getViewport({scale:bounds.fit*s.zoom});
+  try {
+    const ctx=canvas.getContext('2d');
+    s.renderTask=s.pdfPage.render({
+      canvasContext:ctx,viewport,
+      transform:[density,0,0,density,bounds.left*density,bounds.top*density],
+      background:'#ffffff'
+    });
+    await s.renderTask.promise;
+    if(sheetSession!==s||token!==s.revision)return;
+    ctx.save();ctx.fillStyle='#26312e';
+    const left=bounds.left*density, top=bounds.top*density;
+    const right=left+bounds.width*density, bottom=top+bounds.height*density;
+    if(left>0)ctx.fillRect(0,0,left,canvas.height);
+    if(top>0)ctx.fillRect(0,0,canvas.width,top);
+    if(right<canvas.width)ctx.fillRect(right,0,canvas.width-right,canvas.height);
+    if(bottom<canvas.height)ctx.fillRect(0,bottom,canvas.width,canvas.height-bottom);
+    ctx.restore();
+    if(s.base)s.base.replaceWith(canvas);else s.area.insertBefore(canvas,s.ink);
+    s.base=canvas;s.renderedBounds=bounds;
+    previewSheetView(s);
+  } catch(error) {
+    if(error.name!=='RenderingCancelledException'&&sheetSession===s&&token===s.revision) {
+      s.zoomLabel.textContent='표시 오류 · 화면 맞춤을 눌러주세요';
+    }
+  }
+}
+function zoomSheetAt(s, zoom, clientX, clientY) {
+  if(!s.size)return;
+  const rect=s.area.getBoundingClientRect(), old=sheetBounds(s);
+  const x=clientX-rect.left, y=clientY-rect.top;
+  const next=Math.max(1,Math.min(8,zoom)), ratio=next/s.zoom;
+  s.panX=x-(x-old.left)*ratio-(rect.width-old.width*ratio)/2;
+  s.panY=y-(y-old.top)*ratio-(rect.height-old.height*ratio)/2;
+  s.zoom=next;previewSheetView(s);
+}
+function resetSheetZoom(s) {
+  s.finish?.();s.zoom=1;s.panX=s.panY=0;
+  previewSheetView(s);scheduleSheetRender(s);
+}
+function bindSheetGestures(s) {
+  s.pointers=new Map();
+  function endStroke(save=true) {
+    if(!s.stroke)return;
+    const line=s.stroke, page=s.page;
+    s.stroke=null;
+    if(save) {
+      const lines=[...(s.marks[page]||[]),line];
+      s.marks[page]=lines;
+      s.pending=(s.pending||Promise.resolve()).then(()=>writeSheetMarks(s,page,lines)).catch(()=>toast('필기를 저장하지 못했습니다. 기기 저장 공간을 확인해 주세요.'));
+    }
+    redrawSheetInk(s);
+  }
+  s.finish=()=>endStroke(true);
+  const midpoint=points=>({x:(points[0].x+points[1].x)/2,y:(points[0].y+points[1].y)/2});
+  const distance=points=>Math.hypot(points[0].x-points[1].x,points[0].y-points[1].y);
+  s.area.onpointerdown=event=>{
+    if(!s.size||s.changingPage||event.button!==0)return;
+    event.preventDefault();
+    s.area.setPointerCapture(event.pointerId);
+    s.pointers.set(event.pointerId,{x:event.clientX,y:event.clientY});
+    if(s.pointers.size>=2) {
+      endStroke(false);
+      s.multitouch=true;
+      const points=[...s.pointers.values()];
+      s.pinch={mid:midpoint(points),distance:distance(points)};
+      return;
+    }
+    s.multitouch=false;
+    if(s.tool!=='view') {
+      const point=sheetPoint(s,event);
+      if(point.some(value=>value<0||value>1))return;
+      const bounds=sheetBounds(s);
+      s.stroke={erase:s.tool==='erase',color:'#d83b32',width:(s.tool==='erase'?22:2.5)/Math.min(bounds.width,bounds.height),points:[point]};
+      // Wait until movement or release so a second finger does not leave a dot.
+    }
   };
-  canvas.onpointermove=e=>{
-    if(!stroke||pointer!==e.pointerId)return;
-    const next=point(e),last=stroke.points.at(-1);
-    stroke.points.push(next);paint({...stroke,points:[last,next]});
+  s.area.onpointermove=event=>{
+    const previous=s.pointers.get(event.pointerId);
+    if(!previous)return;
+    event.preventDefault();
+    s.pointers.set(event.pointerId,{x:event.clientX,y:event.clientY});
+    if(s.pointers.size>=2) {
+      const points=[...s.pointers.values()], mid=midpoint(points), dist=distance(points);
+      if(s.pinch) {
+        zoomSheetAt(s,s.zoom*dist/Math.max(1,s.pinch.distance),s.pinch.mid.x,s.pinch.mid.y);
+        s.panX+=mid.x-s.pinch.mid.x;s.panY+=mid.y-s.pinch.mid.y;
+        previewSheetView(s);
+      }
+      s.pinch={mid,distance:dist};
+    } else if(!s.multitouch && s.stroke) {
+      s.stroke.points.push(sheetPoint(s,event));redrawSheetInk(s);
+    } else if(!s.multitouch && s.tool==='view') {
+      s.panX+=event.clientX-previous.x;s.panY+=event.clientY-previous.y;previewSheetView(s);
+    }
   };
-  canvas.onpointerup=canvas.onpointercancel=canvas.onlostpointercapture=e=>{if(pointer===e.pointerId)finish();};
+  function release(event) {
+    if(!s.pointers.has(event.pointerId))return;
+    if(!s.multitouch)endStroke(event.type!=='pointercancel');
+    s.pointers.delete(event.pointerId);
+    if(s.area.hasPointerCapture(event.pointerId))s.area.releasePointerCapture(event.pointerId);
+    if(!s.pointers.size) {
+      s.multitouch=false;s.pinch=null;scheduleSheetRender(s);
+    }
+  }
+  s.area.onpointerup=s.area.onpointercancel=s.area.onlostpointercapture=release;
+  s.area.addEventListener('wheel',event=>{
+    if(!s.size)return;
+    event.preventDefault();s.finish();
+    zoomSheetAt(s,s.zoom*(event.deltaY<0?1.2:1/1.2),event.clientX,event.clientY);
+    scheduleSheetRender(s);
+  },{passive:false});
 }
 async function showSheet(s,n) {
   if(!s.pdf||sheetSession!==s||n<1||n>s.pdf.numPages)return;
-  s.finish?.();if(s.page!==n)s.area.replaceChildren();s.page=n;
+  s.finish?.();s.pointers.clear();s.pinch=null;s.multitouch=false;
+  s.changingPage=true;
+  clearTimeout(s.renderTimer);s.renderTask?.cancel();
   const token=++s.revision;
-  s.renderTask?.cancel();
+  s.page=n;s.zoom=1;s.panX=s.panY=0;s.size=null;
+  s.pdfPage=null;s.base=null;s.renderedBounds=null;
+  s.ink=document.createElement('canvas');s.ink.className='sheet-surface sheet-ink';
+  s.area.replaceChildren(s.ink);
   s.count.textContent=n+' / '+s.pdf.numPages;
   s.prev.disabled=n<=1;s.next.disabled=n>=s.pdf.numPages;
+  s.zoomLabel.textContent='불러오는 중…';
   try {
     const page=await s.pdf.getPage(n);
-    if(sheetSession!==s||s.revision!==token)return;
-    const size=page.getViewport({scale:1}),r=s.area.getBoundingClientRect();
-    const scale=Math.min(r.width/size.width,r.height/size.height);
-    if(!(scale>0))return;
-    const cssWidth=size.width*scale,cssHeight=size.height*scale;
-    const density=Math.min(window.devicePixelRatio||1,4096/Math.max(cssWidth,cssHeight),Math.sqrt(8000000/(cssWidth*cssHeight)));
-    const viewport=page.getViewport({scale:scale*density});
-    const base=document.createElement('canvas'),ink=document.createElement('canvas');
-    base.width=ink.width=Math.ceil(viewport.width);base.height=ink.height=Math.ceil(viewport.height);
-    const stage=document.createElement('div');stage.className='sheet-page';
-    stage.style.width=size.width*scale+'px';stage.style.height=size.height*scale+'px';
-    stage.append(base,ink);
-    s.renderTask=page.render({canvasContext:base.getContext('2d'),viewport});
-    await s.renderTask.promise;
-    if(sheetSession!==s||s.revision!==token)return;
-    s.area.replaceChildren(stage);bindSheetInk(s,ink);
+    if(sheetSession!==s||token!==s.revision)return;
+    s.pdfPage=page;s.size=page.getViewport({scale:1});s.changingPage=false;
+    previewSheetView(s);await renderSheetView(s);
   } catch(error) {
-    if(sheetSession===s&&s.revision===token)s.area.textContent='페이지를 표시하지 못했습니다. 원본 열기를 이용해 주세요.';
+    if(sheetSession===s&&token===s.revision)s.zoomLabel.textContent='도면을 열지 못했습니다';
   }
 }
 async function openReference(doc) {
@@ -392,13 +537,17 @@ async function openReference(doc) {
   const bytes=Uint8Array.from(atob(doc.data),ch=>ch.charCodeAt(0));
   referenceURL=URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}));
   showModal({editor:true,title:'참고자료',body:`<div class="sheet-meta"><strong></strong><details><summary>파일</summary><div><a href="${referenceURL}" target="_blank" rel="noopener">원본 열기</a><a href="${referenceURL}" download="${esc(doc.name)}">원본 다운로드</a></div></details></div>
-  <div class="sheet-area">도면을 여는 중…</div><div class="sheet-tools"><button data-tool="view">보기</button><button data-tool="pen">펜</button><button data-tool="erase">지우개</button></div><div class="sheet-nav"><button id="sheetPrev" disabled>‹ 이전 장</button><output aria-live="polite">…</output><button id="sheetNext" disabled>다음 장 ›</button></div>`});
+  <div class="sheet-area">도면을 여는 중…</div><div class="sheet-tools"><button data-tool="view">보기</button><button data-tool="pen">펜</button><button data-tool="erase">지우개</button><button id="sheetFit">화면 맞춤</button><span id="sheetZoom" aria-live="polite">100%</span></div><div class="sheet-nav"><button id="sheetPrev" disabled>‹ 이전 장</button><output aria-live="polite">…</output><button id="sheetNext" disabled>다음 장 ›</button></div>`});
   modal.querySelector('.modal-back').textContent='← 자료 목록';
   modal.querySelector('.sheet-meta strong').textContent=doc.name;
   const s=sheetSession={id:doc.id,marks:{...doc.marks},page:1,revision:0,area:modal.querySelector('.sheet-area'),tools:modal.querySelector('.sheet-tools'),count:modal.querySelector('output'),prev:$('#sheetPrev'),next:$('#sheetNext')};
+  s.zoom=1;s.panX=s.panY=0;s.zoomLabel=$('#sheetZoom');
+  bindSheetGestures(s);
+  $('#sheetFit').onclick=()=>resetSheetZoom(s);
   modal.classList.add('sheet-reader');
+  modal.querySelector('.close').setAttribute('aria-label','참고자료 닫기');
   s.prev.onclick=()=>showSheet(s,s.page-1);s.next.onclick=()=>showSheet(s,s.page+1);
-  for(const button of s.tools.querySelectorAll('button'))button.onclick=()=>setSheetTool(s,button.dataset.tool);
+  for(const button of s.tools.querySelectorAll('[data-tool]'))button.onclick=()=>setSheetTool(s,button.dataset.tool);
   setSheetTool(s,'view');
   try {
     const engine=await pdfEngine();
@@ -406,7 +555,11 @@ async function openReference(doc) {
     s.loading=engine.getDocument({data:bytes,isEvalSupported:false,useWorkerFetch:false,BinaryDataFactory:class {async fetch({filename}){return bundledBytes(filename);}}});
     s.pdf=await s.loading.promise;
     if(sheetSession!==s)return;
-    s.observer=new ResizeObserver(()=>showSheet(s,s.page));s.observer.observe(s.area);
+    await showSheet(s,1);
+    if(sheetSession!==s)return;
+    s.observer=new ResizeObserver(()=>{
+      s.finish?.();previewSheetView(s);scheduleSheetRender(s);
+    });s.observer.observe(s.area);
   } catch {if(sheetSession===s)s.area.textContent='도면을 표시하지 못했습니다. 파일 메뉴에서 원본을 열어 주세요.';}
 }
 function setTab(t){navigateTo({view,projectId,tab:t})}async function launchCamera(){showModal({title:'현장 사진 촬영',body:`<div class="camera-view"><video id="camera" autoplay playsinline muted></video></div><div class="row" style="margin-top:15px"><button class="btn" id="snap">촬영·앱에 저장</button><button class="btn-outline" onclick="closeModal()">취소</button></div><p class="note">HTTPS 환경과 카메라 권한이 필요합니다. 사진 앱으로 자동 내보내지 않습니다.</p>`});try{cameraStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false});$('#camera').srcObject=cameraStream;$('#snap').onclick=async()=>{const v=$('#camera'),c=document.createElement('canvas');c.width=v.videoWidth;c.height=v.videoHeight;if(!c.width)return toast('카메라 준비 중입니다.');c.getContext('2d').drawImage(v,0,0);let data=c.toDataURL('image/jpeg',.82);await savePhoto(data);closeModal()}}catch(e){modal.querySelector('.camera-view').innerHTML='<p style="color:white;padding:20px">카메라 권한이 없거나 지원되지 않습니다.</p>';$('#snap').disabled=true}}
