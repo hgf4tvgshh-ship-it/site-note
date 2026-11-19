@@ -60,7 +60,18 @@
 @media(max-width:420px){.viewer-top button{padding:9px 11px}}
 .folder-link{display:flex;align-items:center;gap:10px;margin-bottom:12px}.folder-link[aria-pressed=true]{background:#dceee3}.folder-link small{color:#476552}.doc-row{display:flex;align-items:center;gap:10px}.doc-open{background:transparent;text-align:left;min-width:0;flex:1;color:var(--ink);overflow-wrap:anywhere;padding:5px}.doc-open small{display:block;color:var(--muted);margin-top:6px}.pdf-tools{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 10px}.pdf-tools a{text-decoration:none}.pdf-frame{width:100%;flex:1;min-height:0;border:0;background:#ecefed}.pdf-name{overflow-wrap:anywhere;margin:0 0 6px;font-size:14px}
 .sheet-area{flex:1;min-height:0;display:grid;place-items:center;background:#26312e;overflow:hidden;color:white;text-align:center}.sheet-page{position:relative;background:white}.sheet-page canvas{position:absolute;inset:0;width:100%;height:100%;display:block}.sheet-area.drawing canvas{touch-action:none;cursor:crosshair}.sheet-tools,.sheet-nav,.sheet-meta{display:flex;align-items:center;gap:8px;padding:4px 0;flex:none}.sheet-tools{justify-content:center}.sheet-nav,.sheet-meta{justify-content:space-between}.sheet-nav button,.sheet-tools button,.sheet-meta summary{padding:8px 14px;min-height:40px;border-radius:10px;background:#e8f0eb;color:#174736;font-weight:700}.sheet-tools [aria-pressed=true]{background:#174736;color:white}.sheet-nav button:disabled{opacity:.35}.sheet-meta strong{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px}.sheet-meta details{position:relative;flex:none}.sheet-meta details div{position:absolute;z-index:3;right:0;background:white;padding:12px;border:1px solid #ccc;display:grid;gap:12px;white-space:nowrap}.sheet-meta a{color:#174736}
-@media(orientation:landscape) and (max-height:550px){#modal:has(.sheet-area){display:grid!important;grid-template-columns:1fr auto;grid-template-rows:auto minmax(0,1fr) auto;gap:4px}.sheet-area{grid-column:1/-1;grid-row:2}.sheet-meta{max-width:38vw}.sheet-tools{justify-content:start}.sheet-nav{gap:8px}}
+@media (orientation:landscape) and (pointer:coarse), (orientation:landscape) and (max-height:550px){
+#overlay.editor-mode .modal.sheet-reader{position:fixed;inset:0;display:block;padding:0;width:100%;height:100dvh;max-height:none;background:#151a18}
+.sheet-reader .sheet-area{position:absolute;inset:0;background:#151a18}
+.sheet-reader .modal-head,.sheet-reader .sheet-meta,.sheet-reader .sheet-tools,.sheet-reader .sheet-nav{display:none}
+.sheet-reader.controls-visible .modal-head,.sheet-reader.controls-visible .sheet-tools,.sheet-reader.controls-visible .sheet-nav{display:flex;position:absolute;z-index:2;background:#fffffff2;border-radius:14px;padding:4px;gap:5px}
+.sheet-reader .modal-head{top:max(6px,env(safe-area-inset-top));left:max(8px,env(safe-area-inset-left))}
+.sheet-reader .modal-head h2,.sheet-reader .modal-head .close{display:none}
+.sheet-reader .sheet-tools{bottom:max(6px,env(safe-area-inset-bottom));left:max(8px,env(safe-area-inset-left))}
+.sheet-reader .sheet-nav{bottom:max(6px,env(safe-area-inset-bottom));right:max(8px,env(safe-area-inset-right))}
+.sheet-reader.controls-visible .sheet-meta{display:block;position:absolute;top:max(6px,env(safe-area-inset-top));right:max(8px,env(safe-area-inset-right));z-index:3}
+.sheet-reader .sheet-meta strong{display:none}
+}
 @media print{#appBack,#photoViewer,.modal-back{display:none!important}}
 </style></head><body><main class="shell"><header class="top"><button id="appBack" class="app-back hidden" type="button" onclick="appGoBack()" aria-label="이전 화면으로 돌아가기">← 뒤로</button><div class="brand">SITE NOTE <span style="color:#6d9e86">/ FIELD</span></div><small id="today"></small></header><div id="app"></div></main><nav class="footer"><button class="nav active" data-nav="home"><span>▦</span>프로젝트</button><button class="nav" data-nav="tasks"><span>☑</span>보수 관리</button><button class="nav" data-nav="backup"><span>▣</span>백업·설정</button></nav><div id="overlay" class="modal-bg hidden"><div class="modal" id="modal"></div></div><input type="file" id="importPhoto" accept="image/*" style="display:none"><input type="file" id="importBackup" accept="application/json,text/plain,.json,.txt" style="display:none"><div id="report-print" style="display:none"></div><script>
 'use strict';
@@ -196,7 +207,7 @@ function project(){let p=projects.find(x=>x.id===projectId);if(!p){go('home');re
 let referenceURL = null;
 function closeDocumentPreview() {
   if(sheetSession){
-    sheetSession.finish?.();sheetSession.observer?.disconnect();sheetSession.renderTask?.cancel();
+    modal.classList.remove("sheet-reader","controls-visible");sheetSession.modeQuery?.removeEventListener("change",sheetSession.hideTools);sheetSession.finish?.();sheetSession.observer?.disconnect();sheetSession.renderTask?.cancel();
     sheetSession.loading?.destroy().catch(()=>{});sheetSession=null;
   }
   if (!referenceURL) return;
@@ -345,9 +356,9 @@ function bindSheetInk(s,canvas) {
 }
 async function showSheet(s,n) {
   if(!s.pdf||sheetSession!==s)return;
-  s.finish?.();s.page=n;
+  s.finish?.();if(s.page!==n)s.area.replaceChildren();s.page=n;
   const token=++s.revision;
-  s.renderTask?.cancel();s.area.replaceChildren();
+  s.renderTask?.cancel();
   s.count.textContent=n+' / '+s.pdf.numPages;
   s.prev.disabled=n<=1;s.next.disabled=n>=s.pdf.numPages;
   try {
@@ -356,7 +367,9 @@ async function showSheet(s,n) {
     const size=page.getViewport({scale:1}),r=s.area.getBoundingClientRect();
     const scale=Math.min(r.width/size.width,r.height/size.height);
     if(!(scale>0))return;
-    const viewport=page.getViewport({scale:scale*Math.min(window.devicePixelRatio||1,2,2600/(scale*Math.max(size.width,size.height)))});
+    const cssWidth=size.width*scale,cssHeight=size.height*scale;
+    const density=Math.min(window.devicePixelRatio||1,4096/Math.max(cssWidth,cssHeight),Math.sqrt(8000000/(cssWidth*cssHeight)));
+    const viewport=page.getViewport({scale:scale*density});
     const base=document.createElement('canvas'),ink=document.createElement('canvas');
     base.width=ink.width=Math.ceil(viewport.width);base.height=ink.height=Math.ceil(viewport.height);
     const stage=document.createElement('div');stage.className='sheet-page';
@@ -379,6 +392,19 @@ async function openReference(doc) {
   modal.querySelector('.modal-back').textContent='← 자료 목록';
   modal.querySelector('.sheet-meta strong').textContent=doc.name;
   const s=sheetSession={id:doc.id,marks:{...doc.marks},page:1,revision:0,area:modal.querySelector('.sheet-area'),tools:modal.querySelector('.sheet-tools'),count:modal.querySelector('output'),prev:$('#sheetPrev'),next:$('#sheetNext')};
+  modal.classList.add('sheet-reader');
+  s.modeQuery=matchMedia('(orientation:landscape) and (pointer:coarse), (orientation:landscape) and (max-height:550px)');
+  s.hideTools=()=>{modal.classList.remove('controls-visible');setSheetTool(s,'view');};
+  s.modeQuery.addEventListener('change',s.hideTools);
+  let tap;
+  s.area.addEventListener('pointerdown',e=>{tap=e.isPrimary?[e.clientX,e.clientY]:null;},true);
+  s.area.addEventListener('pointercancel',()=>{tap=null;},true);
+  s.area.addEventListener('pointerup',e=>{
+    if(s.modeQuery.matches && tap && Math.hypot(e.clientX-tap[0],e.clientY-tap[1])<5){
+      if(s.tool==='view'||!e.target.closest('.sheet-page'))modal.classList.toggle('controls-visible');
+    }
+    tap=null;
+  },true);
   s.prev.onclick=()=>showSheet(s,s.page-1);s.next.onclick=()=>showSheet(s,s.page+1);
   for(const button of s.tools.querySelectorAll('button'))button.onclick=()=>setSheetTool(s,button.dataset.tool);
   setSheetTool(s,'view');
