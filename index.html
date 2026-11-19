@@ -63,14 +63,17 @@
 @media (orientation:landscape) and (pointer:coarse), (orientation:landscape) and (max-height:550px){
 #overlay.editor-mode .modal.sheet-reader{position:fixed;inset:0;display:block;padding:0;width:100%;height:100dvh;max-height:none;background:#151a18}
 .sheet-reader .sheet-area{position:absolute;inset:0;background:#151a18}
-.sheet-reader .modal-head,.sheet-reader .sheet-meta,.sheet-reader .sheet-tools,.sheet-reader .sheet-nav{display:none}
-.sheet-reader.controls-visible .modal-head,.sheet-reader.controls-visible .sheet-tools,.sheet-reader.controls-visible .sheet-nav{display:flex;position:absolute;z-index:2;background:#fffffff2;border-radius:14px;padding:4px;gap:5px}
+
+.sheet-reader .modal-head,.sheet-reader .sheet-tools,.sheet-reader .sheet-nav{display:flex;position:absolute;z-index:2;background:#fffffff2;border-radius:14px;padding:4px;gap:5px}
 .sheet-reader .modal-head{top:max(6px,env(safe-area-inset-top));left:max(8px,env(safe-area-inset-left))}
 .sheet-reader .modal-head h2,.sheet-reader .modal-head .close{display:none}
-.sheet-reader .sheet-tools{bottom:max(6px,env(safe-area-inset-bottom));left:max(8px,env(safe-area-inset-left))}
-.sheet-reader .sheet-nav{bottom:max(6px,env(safe-area-inset-bottom));right:max(8px,env(safe-area-inset-right))}
-.sheet-reader.controls-visible .sheet-meta{display:block;position:absolute;top:max(6px,env(safe-area-inset-top));right:max(8px,env(safe-area-inset-right));z-index:3}
+.sheet-reader .sheet-tools{max-width:calc(50% - 12px);flex-wrap:wrap;bottom:max(6px,env(safe-area-inset-bottom));left:max(8px,env(safe-area-inset-left))}
+.sheet-reader .sheet-nav{max-width:calc(50% - 12px);flex-wrap:wrap;bottom:max(6px,env(safe-area-inset-bottom));right:max(8px,env(safe-area-inset-right))}
+.sheet-reader .sheet-meta{display:block;position:absolute;top:max(6px,env(safe-area-inset-top));right:max(8px,env(safe-area-inset-right));z-index:3}
 .sheet-reader .sheet-meta strong{display:none}
+.sheet-reader .sheet-tools button,.sheet-reader .sheet-nav button{white-space:nowrap;min-height:40px;padding:8px 10px;font-size:12px}
+.sheet-reader .sheet-nav output{white-space:nowrap;font-size:12px}
+
 }
 @media print{#appBack,#photoViewer,.modal-back{display:none!important}}
 </style></head><body><main class="shell"><header class="top"><button id="appBack" class="app-back hidden" type="button" onclick="appGoBack()" aria-label="이전 화면으로 돌아가기">← 뒤로</button><div class="brand">SITE NOTE <span style="color:#6d9e86">/ FIELD</span></div><small id="today"></small></header><div id="app"></div></main><nav class="footer"><button class="nav active" data-nav="home"><span>▦</span>프로젝트</button><button class="nav" data-nav="tasks"><span>☑</span>보수 관리</button><button class="nav" data-nav="backup"><span>▣</span>백업·설정</button></nav><div id="overlay" class="modal-bg hidden"><div class="modal" id="modal"></div></div><input type="file" id="importPhoto" accept="image/*" style="display:none"><input type="file" id="importBackup" accept="application/json,text/plain,.json,.txt" style="display:none"><div id="report-print" style="display:none"></div><script>
@@ -207,7 +210,7 @@ function project(){let p=projects.find(x=>x.id===projectId);if(!p){go('home');re
 let referenceURL = null;
 function closeDocumentPreview() {
   if(sheetSession){
-    modal.classList.remove("sheet-reader","controls-visible");sheetSession.modeQuery?.removeEventListener("change",sheetSession.hideTools);sheetSession.finish?.();sheetSession.observer?.disconnect();sheetSession.renderTask?.cancel();
+    modal.classList.remove("sheet-reader");sheetSession.finish?.();sheetSession.observer?.disconnect();sheetSession.renderTask?.cancel();
     sheetSession.loading?.destroy().catch(()=>{});sheetSession=null;
   }
   if (!referenceURL) return;
@@ -319,6 +322,7 @@ function paintSheetLine(ctx,line,w,h) {
   ctx.stroke();ctx.restore();
 }
 function setSheetTool(s,tool) {
+  s.finish?.();
   s.tool=tool;
   for(const button of s.tools.querySelectorAll('[data-tool]'))button.setAttribute('aria-pressed',String(button.dataset.tool===tool));
   s.area.classList.toggle('drawing', tool!=='view');
@@ -355,7 +359,7 @@ function bindSheetInk(s,canvas) {
   canvas.onpointerup=canvas.onpointercancel=canvas.onlostpointercapture=e=>{if(pointer===e.pointerId)finish();};
 }
 async function showSheet(s,n) {
-  if(!s.pdf||sheetSession!==s)return;
+  if(!s.pdf||sheetSession!==s||n<1||n>s.pdf.numPages)return;
   s.finish?.();if(s.page!==n)s.area.replaceChildren();s.page=n;
   const token=++s.revision;
   s.renderTask?.cancel();
@@ -393,18 +397,6 @@ async function openReference(doc) {
   modal.querySelector('.sheet-meta strong').textContent=doc.name;
   const s=sheetSession={id:doc.id,marks:{...doc.marks},page:1,revision:0,area:modal.querySelector('.sheet-area'),tools:modal.querySelector('.sheet-tools'),count:modal.querySelector('output'),prev:$('#sheetPrev'),next:$('#sheetNext')};
   modal.classList.add('sheet-reader');
-  s.modeQuery=matchMedia('(orientation:landscape) and (pointer:coarse), (orientation:landscape) and (max-height:550px)');
-  s.hideTools=()=>{modal.classList.remove('controls-visible');setSheetTool(s,'view');};
-  s.modeQuery.addEventListener('change',s.hideTools);
-  let tap;
-  s.area.addEventListener('pointerdown',e=>{tap=e.isPrimary?[e.clientX,e.clientY]:null;},true);
-  s.area.addEventListener('pointercancel',()=>{tap=null;},true);
-  s.area.addEventListener('pointerup',e=>{
-    if(s.modeQuery.matches && tap && Math.hypot(e.clientX-tap[0],e.clientY-tap[1])<5){
-      if(s.tool==='view'||!e.target.closest('.sheet-page'))modal.classList.toggle('controls-visible');
-    }
-    tap=null;
-  },true);
   s.prev.onclick=()=>showSheet(s,s.page-1);s.next.onclick=()=>showSheet(s,s.page+1);
   for(const button of s.tools.querySelectorAll('button'))button.onclick=()=>setSheetTool(s,button.dataset.tool);
   setSheetTool(s,'view');
@@ -530,8 +522,8 @@ function editorDrawText(ctx,t){
   if(!t.text)return;
   const m=editorTextMetrics(ctx,t);
   ctx.save();ctx.font=editorFontString(t);ctx.textBaseline='top';ctx.lineJoin='round';
-  ctx.lineWidth=Math.max(2,t.size/7);ctx.strokeStyle='rgba(255,255,255,.94)';ctx.fillStyle=t.color||'#e43636';
-  m.lines.forEach((line,i)=>{const y=t.y+i*t.size*1.35;ctx.strokeText(line,t.x,y);ctx.fillText(line,t.x,y)});
+  ctx.fillStyle=t.color||'#e43636';
+  m.lines.forEach((line,i)=>{const y=t.y+i*t.size*1.35;ctx.fillText(line,t.x,y)});
   ctx.restore();
 }
 function editorRenderText(){
